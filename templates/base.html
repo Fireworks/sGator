@@ -1,0 +1,39 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<title>{% block title %}ScheduleGator{% endblock %}</title>
+<head>
+	{%include "head.html"%}
+</head>
+<body>
+	<div class="navbar-wrapper">
+		<div class="container">
+			<div class="navbar navbar-inverse">
+				<div class="navbar-inner">
+					<div class="container">
+					{%include "navbar.html"%}
+					<!--/.nav-collapse -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="main container">
+		{% include "headers.html" %}
+		{%block content%}{%endblock%}
+	</div>
+	<div class="container">
+		{%block footer%}
+		<footer>
+			{%include "footer.html"%}
+		</footer>
+		{%endblock%}
+	</div>
+	<script type="text/javascript">
+		GLOBALS={}
+	</script>
+	{%block prescript%}{%endblock%}
+	{%include "scripts.html"%}
+	{%block postscript%}{%endblock%}
+</body>
+</html>

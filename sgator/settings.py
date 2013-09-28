@@ -110,7 +110,7 @@ ROOT_URLCONF = 'sgator.urls'
 WSGI_APPLICATION = 'sgator.wsgi.application'
 
 TEMPLATE_DIRS = (
-    os.path.join(PROJECT_PATH, 'template')
+    os.path.join(PROJECT_PATH, 'templates')
 )
 
 INSTALLED_APPS = (

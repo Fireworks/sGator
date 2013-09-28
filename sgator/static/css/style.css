@@ -1,0 +1,13 @@
+/* GENERAL CLASSES */
+
+body{
+	background-color: #FFF9EF;
+}
+
+h1, h2, h3, h4, h5, h6{
+	color: #000;
+}
+
+.navbar-wrapper{
+	margin-top: 25px;
+}
