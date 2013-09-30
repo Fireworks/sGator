@@ -127,7 +127,9 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 	# PIP Apps
 	'tastypie',
+        
 	# Custom Apps
+    'course',
 )
 
 # A sample logging configuration. The only tangible logging

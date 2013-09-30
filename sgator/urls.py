@@ -23,6 +23,8 @@ urlpatterns = patterns('',
 
     # static pages
     url(r'about/', views.static_page("about.html", "About")),
+    url(r'courses/', views.static_page("courses.html", "Courses")),
+    url(r'search/', views.search),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
