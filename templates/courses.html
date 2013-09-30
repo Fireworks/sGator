@@ -1,24 +1,25 @@
 {%extends "base.html"%}
 {%block content%}
-	<h1>Courses Offered </h1>
-  <table>
-{% if results %}
-  {% for result in results %}
-   <tr>
-   <td> {{ result.name }} </td>
-    <td>{{ result.cname }} </td>
-    <td>{{ result.section }}</td>
-    <td>{{ result.cedits }}</td>
-</tr>
-  {% endfor %}
-</table>
-{% else %}
-    <form method="get" action="/search/">
-  Search Courses: <input type="text" name="q" id="id_q" value="{{ query }}"/>
-  <input type="submit" value="Search" />
-</form>
-{% endif %}
-
-
-	
+    <div class="row-fluid">
+    <div class="thumbnail span7 box">
+    	<h1>Courses Offered</h1>
+      <table>
+    {% if results %}
+      {% for result in results %}
+       <tr>
+       <td> {{ result.name }}</td>
+        <td>{{ result.cname }}</td>
+        <td>{{ result.section }}</td>
+        <td>{{ result.cedits }}</td>
+    </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+        <form method="get" action="/search/">
+      Search Courses: <input type="text" name="q" id="id_q" value="{{ query }}"/>
+      <input type="submit" value="Search" />
+    </form>
+    {% endif %}
+    </div>
+    </div>
 {%endblock%}
