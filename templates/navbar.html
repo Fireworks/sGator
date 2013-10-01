@@ -35,17 +35,17 @@
 		</li>
 		{% if user.is_anonymous%}
 		<li class="mobile-menu-item">
-			<a href="#" data-toggle="modal">Sign In</a>
+			<a href="/accounts/login" data-toggle="modal">Sign In</a>
 		</li>
 		<li class="mobile-menu-item">
-			<a href="#" data-toggle="modal">Register</a>
+			<a href="/accounts/register" data-toggle="modal">Register</a>
 		</li>
 		{% else %}
 		<li class="mobile-menu-item">
 			<a href="#">Profile</a>
 		</li>
 		<li class="mobile-menu-item">
-			<a href="#">Logout</a>
+			<a href="/accounts/logout">Logout</a>
 		</li>
 		{% endif %}
 	</ul>
