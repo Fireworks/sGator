@@ -130,7 +130,13 @@ INSTALLED_APPS = (
         
 	# Custom Apps
     'course',
+    
+    # Registration
+    'registration',
 )
+
+ACCOUNT_ACTIVATION_DAYS = 7 # for registration - number of days
+                            # user has to activate accout
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
