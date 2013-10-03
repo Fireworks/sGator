@@ -7,6 +7,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.decorators.cache import cache_page
 from sgator import views
+from sgator import custom_backends
 
 urlpatterns = patterns('',
     # Examples:
@@ -30,5 +31,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     
     # Registration page
+    url(r'^accounts/register/$', custom_backends.RegistrationRedirect.as_view(), name='registration_register'),
     url(r'^accounts/', include('registration.backends.simple.urls')),
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
