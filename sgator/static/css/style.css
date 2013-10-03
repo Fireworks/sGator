@@ -1,7 +1,8 @@
 /* GENERAL CLASSES */
 
 body{
-	background-color: #FFF9EF;
+	background-color: #A6CFFF;
+	font-family: Helvetica, arial, sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6{
@@ -15,4 +16,33 @@ h1, h2, h3, h4, h5, h6{
 .box{
 	background: #fff;
 	padding: 20px;
+}
+
+.white{
+	color: white;
+}
+
+.gray{
+	color: #B0B0B0;
+}
+
+/* Footer */
+#footer-wrapper{
+   z-index: 100;
+   bottom: 0px;
+   left: 0px;
+   position: fixed;
+   width: 100%;
+}
+
+#footer-table{
+	background: #000;
+	width: 100%;
+	text-align: center;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }

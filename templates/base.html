@@ -22,12 +22,12 @@
 		{% include "headers.html" %}
 		{%block content%}{%endblock%}
 	</div>
-	<div class="container">
-		{%block footer%}
-		<footer>
-			{%include "footer.html"%}
-		</footer>
-		{%endblock%}
+	<div id="footer-wrapper">
+		<div class="container">
+			<footer>
+				{% include "footer.html" %}
+			</footer>
+		</div>
 	</div>
 	<script type="text/javascript">
 		GLOBALS={}
