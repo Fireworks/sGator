@@ -2,10 +2,19 @@
 {% load i18n %}
 {% block title %}{% trans "Register for an account" %}{% endblock %}
 {% block content %}
-<table>
-    <form method='post' action=''>{% csrf_token %}
-        {{ form }}
-        <tr><td></td><td><input type="submit" value="{% trans "Register Now" %}" /></td>
-    </form>
-</table>
+<div class="row-fluid">
+	<div class="thumbnail span7 box">
+		<h2>Register</h2>
+		<table>
+	    	<form method='post' action=''>{% csrf_token %}
+	        	{{ form }}
+	        	<tr>
+	        		<td></td>
+	        		<td><input type="submit" class="btn" value="{% trans "Submit" %}" /></td>
+	        	</tr>
+	    	</form>
+		</table>
+	</div>
+</div>
+>>>>>>> More styling, mainly on courses page
 {% endblock %}

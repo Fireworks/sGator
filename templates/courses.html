@@ -2,24 +2,32 @@
 {%block content%}
     <div class="row-fluid">
         <div class="thumbnail span7 box">
-          	<h1>Courses Offered</h1>
-            <table>
-                {% if results %}
+            <h1>Courses Offered</h1>
+            {% if results %}
+            <table class="table-striped" id="results-table" cellpadding="5px">
+                <tr>
+                    <th>Course Number</th>
+                    <th>Course Name</th>
+                    <th>Section</th>
+                    <th>Credits</th>
+                </tr>
                   {% for result in results %}
-                  <tr>
-                      <td> {{ result.name }}</td>
-                      <td>{{ result.cname }}</td>
-                      <td>{{ result.section }}</td>
-                      <td>{{ result.cedits }}</td>
-                  </tr>
+                      {% if not forloop.first %}
+                      <tr>
+                          <td> {{ result.name }}</td>
+                          <td>{{ result.cname }}</td>
+                          <td>{{ result.section }}</td>
+                          <td>{{ result.cedits }}</td>
+                      </tr>
+                      {%endif%}
                   {% endfor %}
             </table>
-                {% else %}
-                  <form method="get" action="/search/">
-                    Search Courses: <input type="text" name="q" id="id_q" value="{{ query }}"/>
-                    <input type="submit" value="Search" />
-                  </form>
-                {% endif %}
+            {% else %}
+            <form method="get" action="/search/">
+              Search Courses: <input type="text" name="q" id="id_q" value="{{ query }}"/>
+              <input type="submit" value="Search" />
+            </form>
+            {% endif %}
         </div>
     </div>
 {%endblock%}

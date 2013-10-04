@@ -9,6 +9,10 @@ h1, h2, h3, h4, h5, h6{
 	color: #000;
 }
 
+form{
+	margin: 0;
+}
+
 .navbar-wrapper{
 	margin-top: 25px;
 }
@@ -24,6 +28,12 @@ h1, h2, h3, h4, h5, h6{
 
 .gray{
 	color: #B0B0B0;
+}
+
+/* Courses Page */
+#results-table{
+	text-align: center;
+	width: 100%;
 }
 
 /* Footer */

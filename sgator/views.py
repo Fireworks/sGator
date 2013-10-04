@@ -18,7 +18,8 @@ def static_page(page, title):
 def search(request):
     query = request.GET.get('q')
     try:
-        results = Course.objects.get(section = query)
+        results = Course.objects.filter(name__contains = query)
+        #results = Course.objects.all()
     except Course.DoesNotExist:
         results = Course.objects.all()  #NEED TO FIGURE OUT DB SEARCH
     context = RequestContext(request)
