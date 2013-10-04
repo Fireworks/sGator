@@ -13,6 +13,10 @@ form{
 	margin: 0;
 }
 
+.no-margin{
+	margin: 0px !important;
+}
+
 .navbar-wrapper{
 	margin-top: 25px;
 }

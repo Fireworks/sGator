@@ -2,7 +2,8 @@
 {%block content%}
     <div class="row-fluid">
         <div class="thumbnail span7 box">
-            <h1>Courses Offered</h1>
+            <h2>Courses Offered</h2>
+            <br/>
             {% if results %}
             <table class="table-striped" id="results-table" cellpadding="5px">
                 <tr>
@@ -24,8 +25,8 @@
             </table>
             {% else %}
             <form method="get" action="/search/">
-              Search Courses: <input type="text" name="q" id="id_q" value="{{ query }}"/>
-              <input type="submit" value="Search" />
+              Search Courses: <input type="text" class="no-margin" name="q" id="id_q" value="{{ query }}"/>
+              <input type="submit" class="btn" value="Search" />
             </form>
             {% endif %}
         </div>
