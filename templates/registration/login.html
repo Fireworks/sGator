@@ -1,7 +1,6 @@
 {% extends "registration/registration_base.html" %}
 {% load i18n %}
-{% url 'auth_password_reset' as auth_pwd_reset_url %}
-{% url 'registration_register' as register_url%}
+{% url '/accounts/register' as register_url%}
 {% block title %}{% trans "Login" %}{% endblock %}
 {% block content %}
 <div class="row-fluid">
@@ -21,8 +20,7 @@
 		    <td>{{ form.password }}</td>
 		</tr>
 		</table>
-		<p>{% blocktrans %}<a href="{{ auth_pwd_reset_url }}">Forgot</a> your password?
-		    <a href="{{ register_url }}">Need an account</a>?{% endblocktrans %}</p>
+		<p>{% blocktrans %}<a href="/accounts/register">Need an account</a>?{% endblocktrans %}</p>
 
 		<input type="submit" class="btn" value="{% trans "Sign-in" %}" />
 		<input type="hidden" name="next" value="{{ next }}" />
