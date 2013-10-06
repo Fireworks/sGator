@@ -28,6 +28,7 @@
                   {% endfor %}
             </table>
             {% else %}
+			<p> To browse all courses leave the field blank and just press "Search."
             <form method="get" action="/search/">
               Search Courses: <input type="text" class="no-margin" name="q" id="id_q" value="{{ query }}"/>
               <input type="submit" class="btn" value="Search" />
