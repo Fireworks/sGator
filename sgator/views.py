@@ -21,6 +21,7 @@ def search(request):
         results = Course.objects.filter(name__contains = query)
         #results = Course.objects.all()
     except Course.DoesNotExist:
-        results = Course.objects.all()  #NEED TO FIGURE OUT DB SEARCH
+        results = Course.objects.all()  
     context = RequestContext(request)
-    return render_to_response('courses.html', {"results": results,}, context_instance=context)
+    size = len(results)
+    return render_to_response('courses.html', {"results": results,"size": size}, context_instance=context)

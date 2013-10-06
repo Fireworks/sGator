@@ -6,6 +6,10 @@
             <br/>
             {% if results %}
             <table class="table-striped" id="results-table" cellpadding="5px">
+                <p> Number of Matches: {{size}}</p>
+
+                 <form action = "/courses/"><input Type="submit"  class="btn" value="Back To Search"></form>
+
                 <tr>
                     <th>Course Number</th>
                     <th>Course Name</th>
@@ -13,14 +17,14 @@
                     <th>Credits</th>
                 </tr>
                   {% for result in results %}
-                      {% if not forloop.first %}
+                      
                       <tr>
                           <td> {{ result.name }}</td>
                           <td>{{ result.cname }}</td>
                           <td>{{ result.section }}</td>
                           <td>{{ result.cedits }}</td>
                       </tr>
-                      {%endif%}
+                      
                   {% endfor %}
             </table>
             {% else %}

@@ -51,7 +51,8 @@ class Command(BaseCommand):
                         if (pq(c).text().__len__() == 8 and pq(c).text()[3:4] == " ") or (pq(c).text().__len__() == 9 and pq(c).text()[3:4] == " "):
                                 y = 0
                                 x= x+1
-                                g.save()
+                                if g.name != '0':
+                                    g.save()
                                 
                                 g = Course(x,'0','0','0','0','0','0','0','0','0','0','0','0','0')
                                 
