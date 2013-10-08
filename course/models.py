@@ -14,7 +14,7 @@ class Course(models.Model):
     cedits = models.CharField(max_length=200)
     lbuild = models.CharField(max_length=200)
     cinst = models.CharField(max_length=200)
-    
+    #department = models.CharField(max_length=500)
     
     def __unicode__(self):  
         return self.name

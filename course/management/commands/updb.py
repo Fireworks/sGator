@@ -43,7 +43,7 @@ class Command(BaseCommand):
                     started = False
                     moveA = False
                     y = 0
-                    g = Course('0','0','0','0','0','0','0','0','0','0','0','0','0')
+                    g = Course('0','0','0','0','0','0','0','0','0','0','0','0','0','0')
                     pq = PyQuery(pages)
                     tag = pq('td')
                     
@@ -54,7 +54,7 @@ class Command(BaseCommand):
                                 if g.name != '0':
                                     g.save()
                                 
-                                g = Course(x,'0','0','0','0','0','0','0','0','0','0','0','0','0')
+                                g = Course(x,' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ')
                                 
                                 g.name = pq(c).text()
                                 started = True

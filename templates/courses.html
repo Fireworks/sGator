@@ -1,7 +1,7 @@
 {%extends "base.html"%}
 {%block content%}
     <div class="row-fluid">
-        <div class="thumbnail span7 box">
+        <div class="thumbnail span17 box">
             <h2>Courses Offered</h2>
             <br/>
             {% if results %}
@@ -15,6 +15,13 @@
                     <th>Course Name</th>
                     <th>Section</th>
                     <th>Credits</th>
+                    <th>Course Instructor</th>
+                    <th>Lecture Day</th>
+                    <th>Lecture Period</th>
+                    <th>Lecture Location</th>
+                    <th>Disc. Day</th>
+                    <th>Disc. Period</th>
+                    <th>Disc. Location</th>    
                 </tr>
                   {% for result in results %}
                       
@@ -23,15 +30,37 @@
                           <td>{{ result.cname }}</td>
                           <td>{{ result.section }}</td>
                           <td>{{ result.cedits }}</td>
+                          <td>{{ result.cinst }}</td>
+                          <td>{{ result.lday}}</td>
+                          <td>{{ result.ltime }}</td>
+                          {% if result.lbuild == 'Not Available'%}
+                          {% else %}
+                          <td>{{ result.lbuild}} {{result.lroom}}</td>
+                          {% endif %}
+                          
+                          
+                          {% if result.dday == 'Not Available'%}
+                          {% else %}
+                          <td>{{ result.dday}}</td>
+                          <td>{{ result.dtime }}</td>
+                          <td>{{ result.dbuild}} {{result.droom}}</td>
+                          {% endif %}
                       </tr>
                       
                   {% endfor %}
             </table>
             {% else %}
-			<p> To browse all courses leave the field blank and just press "Search."
-            <form method="get" action="/search/">
-              Search Courses: <input type="text" class="no-margin" name="q" id="id_q" value="{{ query }}"/>
-              <input type="submit" class="btn" value="Search" />
+			 <p>To browse all courses leave the field blank and just press "Search."</p>
+
+             <form method="get" action="/search/">
+             Select what you would like to search by: <select NAME ="c"> 
+             <option value = "name" selected="selected">Course Number</option>
+             <option value = "section">Section</option>
+             <option value = "prefix">Course Prefix</option>
+             <option value = "instr">Course Instructor</option>
+             </select>
+              <p>Search Courses: <input type="text" class="no-margin" name="q" id="id_q" value="{{ query }}"/>
+             <input type="submit" class="btn" value="Search" /></p>
             </form>
             {% endif %}
         </div>
