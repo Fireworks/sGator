@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     # static pages
     url(r'about/', views.static_page("about.html", "About")),
     url(r'profile/', views.profile),
+    url(r'schedule/', views.static_page("schedule.html", "Generate Schedule")),
     url(r'courses/', views.static_page("courses.html", "Courses")),
     url(r'pasth/', views.pasth),
     url(r'search/', views.search),

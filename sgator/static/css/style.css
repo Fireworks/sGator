@@ -40,6 +40,25 @@ form{
 	width: 100%;
 }
 
+/* Schedule Page */
+#schedule-options h2{
+	margin-top: 0px;
+}
+
+#schedule-options button {
+	width: 100%;
+}
+
+#select-courses{
+	width: 93%;
+}
+
+#num-credits{
+	width: 25%;
+	float: right;
+}
+
+
 /* Footer */
 #footer-wrapper{
    z-index: 100;
