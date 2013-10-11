@@ -85,9 +85,9 @@ class Command(BaseCommand):
                                 if y == 10 and moveA != True:
                                      g.lroom = pq(c).text()
                                 if y == 12 and moveA != True:
-                                    g.cname = pq(c).text()
+                                     g.cname = pq(c).text()
                                 if y == 13 and moveA != True:
-                                    g.cinst = pq(c).text()
+                                     g.cinst = pq(c).text()
 
                                 if y == 6 and moveA == True:
                                      g.section = pq(c).text()
@@ -113,4 +113,5 @@ class Command(BaseCommand):
                                      g.cname = pq(c).text()
                                 if y == 14 and moveA == True:
                                      g.cinst = pq(c).text()
+                                     
 
