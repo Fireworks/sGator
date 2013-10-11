@@ -14,9 +14,7 @@ class Command(BaseCommand):
     help = 'Updates the Database'
 
     def handle(self, *args, **options):
-        
-           
-            
+                
             url = "http://www.registrar.ufl.edu/soc/201308/all/"
             page = urllib2.urlopen(url)
             soup = BeautifulSoup(page)
@@ -26,14 +24,14 @@ class Command(BaseCommand):
             contents = [str(x.text) for x in soup.find_all('option')]
             x = 0
             for value in contents:
-                #print value  # all option values all DEPARTMENTS
+                # all option values all DEPARTMENTS
                 list1.append(value)
     
             for value in soup2:
-                #print value   # all endings for the web addresses per department 
+                # all endings for the web addresses per department 
                 list2.append(value)
 
-            for website in list2:
+            for idx, website in enumerate(list2):
                 temp1 = website.strip()
                 if not not temp1:
                     print "OPENING: " + url + website
@@ -43,27 +41,27 @@ class Command(BaseCommand):
                     started = False
                     moveA = False
                     y = 0
-                    g = Course('0','0','0','0','0','0','0','0','0','0','0','0','0','0')
+                    g = Course('0','0','0','0','0','0','0','0','0','0','0','0','0','0','0')
                     pq = PyQuery(pages)
                     tag = pq('td')
+                    index = list2.index(website)
                     
                     for c in  pq('td'):
                         if (pq(c).text().__len__() == 8 and pq(c).text()[3:4] == " ") or (pq(c).text().__len__() == 9 and pq(c).text()[3:4] == " "):
                                 y = 0
                                 x= x+1
                                 if g.name != '0':
+                                    g.dept = list1[index] # Department added to each course
                                     g.save()
-                                
-                                g = Course(x,' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ')
+                                    
+                                g = Course(x,' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ')
                                 
                                 g.name = pq(c).text()
                                 started = True
                                 moveA = False
                                 
                         if (not (pq(c).text().__len__() == 8 and pq(c).text()[3:4] == " ") or (pq(c).text().__len__() == 9 and pq(c).text()[3:4] == " ")) and started == True:
-                                y = y+1
-                                #text_file.write pq(c).text() + "    INDEX: " + str(y)
-        
+                                y = y+1        
                                 if y == 7 and moveA != True:
                                      g.lday = pq(c).text()
                                 if y == 21 and moveA != True:
@@ -91,7 +89,6 @@ class Command(BaseCommand):
                                 if y == 13 and moveA != True:
                                     g.cinst = pq(c).text()
 
-
                                 if y == 6 and moveA == True:
                                      g.section = pq(c).text()
                                 if y == 7 and moveA == True:
@@ -116,4 +113,4 @@ class Command(BaseCommand):
                                      g.cname = pq(c).text()
                                 if y == 14 and moveA == True:
                                      g.cinst = pq(c).text()
-#self.stdout.write('Successfully Updated the Databse')
+

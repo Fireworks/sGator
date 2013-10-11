@@ -8,6 +8,9 @@ from course.models import Course
 from django.template import Context, loader
 from django.template import RequestContext
 from django.shortcuts import render_to_response
+from django.views.decorators.csrf import csrf_exempt   
+from pyquery import PyQuery
+
 import string
 
 def insert_space(string, integer):
@@ -21,49 +24,22 @@ def static_page(page, title):
 
 def search(request):
     query = request.GET.get('q')
-    criteria = request.GET.get('c')
-    if criteria == 'name':
-         if not ' ' in query:
-             tquery = insert_space(query, 3)
-         else: tquery = query
-             
-         try:
-            results = Course.objects.filter(name__iexact = tquery)
-        
-         except Course.DoesNotExist:
-            results = Course.objects.all()
-
-    if criteria == 'prefix':
-        
-         try:
-            results = Course.objects.filter(name__icontains = query)
-        
-         except Course.DoesNotExist:
-            results = Course.objects.all()
-            
-            
-    if criteria == 'section':
-         
-         try:
-            results = Course.objects.filter(section__icontains = query)
-        
-         except Course.DoesNotExist:
-            results = Course.objects.all()
-
-    if criteria == 'instr':
-         if ' ' in query:
-             tquery = query.rpartition(' ')[2]
-         else: 
-                tquery = query
-         try:
-            results = Course.objects.filter(cinst__icontains = tquery)
-        
-         except Course.DoesNotExist:
-            results = Course.objects.all()
-
-
-
-            
+    criteria = request.GET.get('DEPT')
+    if criteria != " ":
+        resultsF = Course.objects.filter(dept__exact = criteria)
+    
+    size = len(resultsF)      
     context = RequestContext(request)
-    size = len(results)
-    return render_to_response('courses.html', {"results": results,"size": size}, context_instance=context)
+    return render_to_response('courses.html', {"results": resultsF,"size": size}, context_instance=context)
+
+@csrf_exempt 
+def pasth(request):
+    data = request.POST.get('test')
+    context = RequestContext(request)
+    results = list()
+    pq = PyQuery(data)
+    for c in pq('td'):
+        results.append(pq(c).text())
+        #to be parsed and added to Schedule Model when created
+
+    return render_to_response('pasth.html', {"results": results,}, context_instance=context)
