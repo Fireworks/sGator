@@ -13,6 +13,7 @@ class Section(models.Model):
     # time = [{'day':'M', 'time':5}, {'day':'W', 'time':5}, {'day':'F', 'time':5}]
 
     # Extra fields for display
+    lecture_or_discussion = models.CharField(max_length=200) # To clarify for display purposes
     course_full_name = models.CharField(max_length=200)
     building = models.CharField(max_length=200)
     room = models.CharField(max_length=200)
