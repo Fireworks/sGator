@@ -9,10 +9,12 @@ $(document).ready(function(){
 
   $("#weeklyPlannerSchedule").click(function(){
     $("#weeklyPlannerSchedule").hide();
+    $("#courseSchedule").fadeIn(600);
   });
   
   $("#courseSchedule").click(function(){
-    $("#courseSchedule").show();
+    $("#courseSchedule").hide();
+    $("#weeklyPlannerSchedule").fadeIn(600);
   });
 });
 </script>
