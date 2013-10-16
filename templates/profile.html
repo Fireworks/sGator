@@ -1,8 +1,33 @@
 {%extends "base.html"%}
 {%block content%}
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+//Toggle button text
+$(document).ready(function() {
+	$("#courseSchedule").hide();
+
+	$("#weeklyPlannerSchedule").click(function() {  
+		$("#weeklyPlannerSchedule").hide();
+		$("#courseSchedule").fadeIn(600);
+	});
+
+	$("#courseSchedule").click(function() {  
+		$("#courseSchedule").hide();
+		$("#weeklyPlannerSchedule").fadeIn(600);
+	});
+</script>
+</head>
     <div class="row-fluid">
         <div class="thumbnail span17 box">
-            <font size="16">{{ user.username }}'s User Profile</font> 
+            <font size="10">{{ user.username }}'s User Profile</font><br> 
+            <h3>Current Schedule</h3>
+            <button id="weeklyPlannerSchedule">View Weekly Planner Schedule</button>
+            <button id="courseSchedule">View Course Schedule</button>
+
+            <div class="currentSchedule">
+  				<p>Current Schedule displays here.</p>
+			</div>
 
 
 
@@ -12,6 +37,7 @@
 
 
             <p></p>
+            <h3>Past Schedules</h3>
             <p><a href="/pasth">Obtain Past Course History</a> </p>
             
 

@@ -79,3 +79,16 @@ form{
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 }
+
+.currentSchedule {
+	width: 620px;
+	height: 420px;
+    border-style: groove;
+	border-width: 5px;
+	border-top-color: blue;
+	border-right-color: #FF6A33;
+	border-left-color: blue;
+	border-bottom-color: #FF6A33;
+
+
+}
