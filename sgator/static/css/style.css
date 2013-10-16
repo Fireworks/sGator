@@ -92,3 +92,46 @@ form{
 
 
 }
+
+.scheduleButtons {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffb65c), color-stop(1, #fb9e25) );
+	background:-moz-linear-gradient( center top, #ffb65c 5%, #fb9e25 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffb65c', endColorstr='#fb9e25');
+	background-color:#ffb65c;
+	-webkit-border-top-left-radius:5px;
+	-moz-border-radius-topleft:5px;
+	border-top-left-radius:5px;
+	-webkit-border-top-right-radius:5px;
+	-moz-border-radius-topright:5px;
+	border-top-right-radius:5px;
+	-webkit-border-bottom-right-radius:5px;
+	-moz-border-radius-bottomright:5px;
+	border-bottom-right-radius:5px;
+	-webkit-border-bottom-left-radius:5px;
+	-moz-border-radius-bottomleft:5px;
+	border-bottom-left-radius:5px;
+	text-indent:0px;
+	border:1px solid #eeb44f;
+	display:inline-block;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:normal;
+	font-style:normal;
+	height:32px;
+	line-height:32px;
+	width:170px;
+	text-decoration:none;
+	text-align:center;
+}
+.scheduleButtons:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fb9e25), color-stop(1, #ffb65c) );
+	background:-moz-linear-gradient( center top, #fb9e25 5%, #ffb65c 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fb9e25', endColorstr='#ffb65c');
+	background-color:#fb9e25;
+}
+.scheduleButtons:active {
+	position:relative;
+	top:1px;
+}
+
