@@ -26,7 +26,7 @@ class Command(BaseCommand):
             for value in contents:
                 # all option values all DEPARTMENTS
                 list1.append(value)
-                
+    
             for value in soup2:
                 # all endings for the web addresses per department 
                 list2.append(value)
@@ -55,6 +55,7 @@ class Command(BaseCommand):
                                     g.save()
                                     
                                 g = Course(x,' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ')
+                                
                                 g.name = pq(c).text()
                                 started = True
                                 moveA = False

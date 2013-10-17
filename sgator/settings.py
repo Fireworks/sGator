@@ -201,6 +201,4 @@ except ImportError:
     
 TEMPLATE_DEBUG = DEBUG
 
-AUTH_PROFILE_MODULE = "course.UserProfile"
-
 MANAGERS = ADMINS

@@ -1,5 +1,3 @@
-from django.db.models.signals import post_save
-from django.contrib.auth.models import User
 from django.db import models
 
 class Course(models.Model):
@@ -17,22 +15,7 @@ class Course(models.Model):
     lbuild = models.CharField(max_length=200)
     cinst = models.CharField(max_length=200)
     dept = models.CharField(max_length=200)
-   
+    #department = models.CharField(max_length=500)
     
     def __unicode__(self):  
         return self.name
-
-class UserProfile(models.Model):
-    pastsc = models.CharField(max_length=200 ) #Schedule Model to replace Charfield
-    cursc = models.CharField(max_length=200 )
-    user = models.ForeignKey(User, unique=True)
-#tentative userprofile fields to be changed
-    
-    def __unicode__(self):
-        return self.user.username + "'s User Profile"
-    
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserProfile.objects.create(user=instance)
-
-post_save.connect(create_user_profile, sender=User)

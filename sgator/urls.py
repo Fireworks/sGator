@@ -8,6 +8,9 @@ from sgator import views
 from sgator import custom_backends
 
 urlpatterns = patterns('',
+    # Examples:
+    # url(r'^$', 'ama.views.home', name='home'),
+    # url(r'^ama/', include('ama.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -20,7 +23,7 @@ urlpatterns = patterns('',
     # static pages
     url(r'about/', views.static_page("about.html", "About")),
     url(r'profile/', views.profile),
-    url(r'schedule/', views.generateSchedule),
+    url(r'schedule/', views.static_page("schedule.html", "Generate Schedule")),
     url(r'courses/', views.static_page("courses.html", "Courses")),
     url(r'pasth/', views.pasth),
     url(r'search/', views.search),
