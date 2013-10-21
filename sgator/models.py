@@ -19,5 +19,5 @@ class Section(models.Model):
     instructor = models.CharField(max_length=200)
     department = models.CharField(max_length=200)
 
-    def is_overlapping(self, other):
+    def overlaps(self, other):
         return any(t==t2 for t in self.times for t2 in other.times)
