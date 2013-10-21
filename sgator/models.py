@@ -5,9 +5,7 @@ class Section(models.Model):
     name = models.CharField(max_length=200)
     section = models.CharField(max_length=200)
     DAYS_OF_WEEK = ('M', 'T', 'W', 'R', 'F')
-    PERIODS = range(1,12)
-    for i in range(1,4):
-        PERIODS.append('E' + str(i))
+    PERIODS = map(str, range(1,12)) + ['E1', 'E2', 'E3']
     times = models.CharField(max_length=2, choices=DAYS_OF_WEEK, PERIODS)
     # Example of times:
     # time = [{'day':'M', 'time':5}, {'day':'W', 'time':5}, {'day':'F', 'time':5}]
