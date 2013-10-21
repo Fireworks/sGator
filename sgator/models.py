@@ -4,7 +4,7 @@ class Section(models.Model):
     # Necessary for building schedules
     name = models.CharField(max_length=200)
     section = models.CharField(max_length=200)
-    DAYS_OF_WEEK = ('M', 'T', 'W', 'R', 'F')
+    DAYS_OF_WEEK = ('M', 'T', 'W', 'R', 'F', 'S')
     PERIODS = map(str, range(1,12)) + ['E1', 'E2', 'E3']
     times = models.CharField(max_length=2, choices=DAYS_OF_WEEK, PERIODS)
     # Example of times:
