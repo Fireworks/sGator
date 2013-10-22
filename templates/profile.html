@@ -1,20 +1,238 @@
 {%extends "base.html"%}
 {%block content%}
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+//Toggle button text
+$(document).ready(function(){
+    $("#courseSchedule").hide();
+    $("#weeklyPlannerDiv").hide();
+
+  $("#weeklyPlannerSchedule").click(function(){
+    $("#weeklyPlannerSchedule").hide();
+    $("#courseSchedule").fadeIn(500);
+    $("#courseScheduleDiv").hide();
+    $("#weeklyPlannerDiv").fadeIn(500);
+  });
+  
+  $("#courseSchedule").click(function(){
+    $("#courseSchedule").hide();
+    $("#weeklyPlannerSchedule").fadeIn(500);
+    $("#weeklyPlannerDiv").hide();
+    $("#courseScheduleDiv").fadeIn(500);
+  });
+});
+
+</script>
+</head>
     <div class="row-fluid">
-        <div class="thumbnail span17 box">
-            <font size="16">{{ user.username }}'s User Profile</font> 
+        <div class="thumbnail span4 box">
+            <h2>Options</h2><br>
 
+            <h4>Toggle Schedule View:</h4>
+            <button id="weeklyPlannerSchedule" class="scheduleButtons" >View Weekly Planner</button>
+            <button id="courseSchedule" class="scheduleButtons">View Course Schedule</button><br><br>
 
-
-
-
-
-
-
-            <p></p>
-            <p><a href="/pasth">Obtain Past Course History</a> </p>
+            <h4>Past Schedules:</h4>
+            <p><a href="/pasth"><button id= "pastSchedules" class="scheduleButtons">Obtain Past Course History</button></a> </p>
+         </div>
+      
+        <div class="thumbnail span8 box">
+            <font size="10">{{ user.username }}'s User Profile</font><br> 
+            <h3>Current Schedule</h3>
             
 
-      </div>
-    </div>
+            <div id="weeklyPlannerDiv" class="currentSchedule">
+              <table id="weeklyPlanner-table" class="table table-bordered" style= "display:">
+                  <tr>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                  </tr>
+                  <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+              </table>
+
+
+			       </div>
+
+            <div id="courseScheduleDiv" class="currentSchedule">
+              <p>Weekly Planner hidden.<br> Course Schedule goes here...<br>Click Button to toggle.</p>
+            </div>
+
+            <!-- <h3>Past Schedules</h3>
+            <p><a href="/pasth">Obtain Past Course History</a> </p> -->
+            
+
+         </div>
+       
+     </div>
 {%endblock%}
