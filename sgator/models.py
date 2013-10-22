@@ -14,9 +14,3 @@ class Schedule(models.Model):
         del self.sections[course.section]
         self.credits = self.credits - course.credits
         # subtract out credits of course
-
-    def returnSchedule(self):
-        return self.sections.values()
-
-    def returnCredits(self):
-        return self.credits
