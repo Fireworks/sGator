@@ -9,7 +9,11 @@ for section in Sections:
 for i in range(len(Results)):
     # split Results[i]/lday into list by ' 's
     # build list containing dictionary elements
-    times = [{'day': x, 'time': y} for x, y in zip((c for c in Results[i].lday if c is not " "), Results[i].ltime)]
-    times.update(dict(zip((c for c in Results[i].dday if c is not " "), Results[i].dtime)))
+    lecture_days = (c for c in Results[i].lday if c is not " ")
+    lecture_time = Results[i].ltime
+    discussion_days = (c for c in Results[i].dday if c is not " ")
+    discussion_time = Results[i].dtime
+    times = [{'day': day, 'time': time} for day, time in zip(lecture_days, lectures_time)] +
+            [{'day': day, 'time': time} for day, time in zip(discussion_days, discussion_time)]
     Results[i] = (Results[i], times)
 
