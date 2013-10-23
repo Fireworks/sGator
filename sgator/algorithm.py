@@ -17,3 +17,4 @@ for i in range(len(Results)):
             [{'day': day, 'time': time} for day, time in zip(discussion_days, discussion_time)]
     Results[i] = (Results[i], times)
 
+# At this point, Results contains all the sections of all the courses the user requested
