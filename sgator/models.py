@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-=======
 from django.db import models
-
-# Create your models here.
 
 class Schedule(models.Model):
     def __init__(self):
@@ -28,4 +24,3 @@ class Schedule(models.Model):
 
     def returnCredits(self):
         return self.credits
->>>>>>> 3d5c9e7b1466355194c6dfd22806442901028e74
