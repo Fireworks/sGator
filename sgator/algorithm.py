@@ -1,10 +1,9 @@
-from course.models import Course
+from course.models import Course as DB_Course
 
-# This part gets the list of sections we need
-Results = []
-# Sections is the list of courses requested by the user
-for section in Sections:
-    Results += list(Course.objects.filter(name__icontains = section.name)) # where section.name is the string name, ie "CEN 3031"
+Courses = [] # This is where we would get the list of Strings for the user's requested courses
+Results = [] # We will query the database to fill this list with each section for each course in Courses
+for course in Courses:
+    Results += list(DB_Course.objects.filter(name__icontains = course)) # where section.name is the string name, ie "CEN 3031"
 # At this point we should have a list of Courses in Jordan format
 for i in range(len(Results)):
     # split Results[i]/lday into list by ' 's
