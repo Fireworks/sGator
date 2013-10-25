@@ -15,13 +15,19 @@ for i in range(len(Results)):
     lecture_time = Results[i].ltime
     discussion_days = (c for c in Results[i].dday if c is not " ")
     discussion_time = Results[i].dtime
-    times = [{'day': day, 'time': time} for day, time in zip(lecture_days, lectures_time)] +
-            [{'day': day, 'time': time} for day, time in zip(discussion_days, discussion_time)]
+    times = [{'day': day, 'time': time} for day, time in zip(lecture_days, lecture_time)] + [{'day': day, 'time': time} for day, time in zip(discussion_days, discussion_time)]
     Results[i] = (Results[i], times)
 
 # At this point, Results contains all the sections of all the courses the user requested
 Possible_Schedules = []
 # add all the partial schedules for the first course here...
 
-for i in range(1,len(Courses)):
+for i in range(1,len(Results)):
     # add every section from Results that match Courses_[i], if they don't overlap
+    schedule = Schedule.__init__()
+    schedule.add(Results(i))
+    for j in range(1,len(Results)):
+        schedule.add(Results(j))
+        
+        
+    Possible_Schedules[i] = schedule
