@@ -24,7 +24,8 @@ def overlaps(class1, class2):
     return any(t==t2 for t in class1[1] for t2 in class2[1])
 
 # At this point, Results contains all the sections of all the courses the user requested
-Possible_Schedules = list(Schedule(x) for x in Results[i][0] if Results[i][0].
+#Possible_Schedules = list(Schedule(x) for x in Results[i][0] if Results[i][0].
+Possible_Schedules = []
 # add all the partial schedules for the first course here...
 
 for i in range(1,len(Courses)):
