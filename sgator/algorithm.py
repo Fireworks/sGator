@@ -1,4 +1,5 @@
 from course.models import Course as DB_Course
+from sgator.models import Schedule
 
 Courses = [] # This is where we would get the list of Strings for the user's requested courses
 Results = [] # We will query the database to fill this list with each section for each course in Courses
@@ -19,4 +20,8 @@ for i in range(len(Results)):
     Results[i] = (Results[i], times)
 
 # At this point, Results contains all the sections of all the courses the user requested
+Possible_Schedules = []
+# add all the partial schedules for the first course here...
 
+for i in range(1,len(Courses)):
+    # add every section from Results that match Courses_[i], if they don't overlap
