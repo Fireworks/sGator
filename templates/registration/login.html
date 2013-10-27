@@ -93,8 +93,8 @@
 		</form>
 		<link href="{{ STATIC_URL }}css/facebook.css" type="text/css" rel="stylesheet" media="all" />
 		{% include 'django_facebook/_facebook_js.html' %}
-		<form action="http://facebook.com?facebook_login=1" method="post">
-<a href="javascript:void(0);" style="font-size: 20px;" onclick="F.connect(this.parentNode);">Register, login or connect with facebook</a>
+		<form action="{% url 'facebook_connect' %}?facebook_login=1" method="post">
+<a href="javascript:void(0);" style="font-size: 15px;" onclick="F.connect(this.parentNode);">Connect with Facebook</a>
 <input type="hidden" value="{{ request.path }}" name="next" />
 <input type="hidden" value="{{ request.path }}" name="register_next" />
 <input type="hidden" value="{{ request.path }}" name="error_next" />
