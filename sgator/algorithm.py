@@ -4,7 +4,7 @@ from sgator.models import Schedule
 #Courses = [] # This is where we would get the list of Strings for the user's requested courses
 #Results = [] # We will query the database to fill this list with each section for each course in Courses
 
-def getResults(Courses):
+def get_results(Courses):
     Results = []
     for course in Courses:
         course.replace(" ","") # Remove any spaces
