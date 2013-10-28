@@ -38,4 +38,17 @@ Possible_Schedules = []
 #        
 #    Possible_Schedules[i] = schedule
 
-def generateSchedules():
+def generate_schedules():
+    schedule = Schedule.__init__()
+    schedule.add(Results[0])
+    generate_schedules_helper(schedule,1)
+
+def generate_schedules_helper(schedule,i):
+    if i == len(Results): # base case
+        Possible_Schedules[len(Possible_Schedules)] = schedule
+    else:
+        for j in range(i,len(Results)): # recursive case
+            schedule2 = schedule
+            if not overlaps(Results[i],Results[j]): # only make a new schedule if there is no conflict
+                schedule2.add(Results[j])
+                generate_schedules_helper(schedule2,j)
