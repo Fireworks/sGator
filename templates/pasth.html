@@ -11,6 +11,9 @@
           1.Bookmark this link: <a href="javascript:function post_to_url(path,params,method){method=method||'post';var form=document.createElement('form');form.setAttribute('method',method);form.setAttribute('action',path);for(var key in params){if(params.hasOwnProperty(key)){var hiddenField=document.createElement('input');hiddenField.setAttribute('type','hidden');hiddenField.setAttribute('name',key);hiddenField.setAttribute('value',params[key]);form.appendChild(hiddenField);}}document.body.appendChild(form);form.submit();}if(window.location=='https://www.isis.ufl.edu/cgi-bin/nirvana?MDASTRAN=RSI-GRADES'){alert('You are now being redirected back to ScheduleGator.com');string=document.getElementsByTagName('body')[0].innerHTML;post_to_url('http://localhost:8000/pasth/',{'test':string});}">ScheduleGator</a>
 
           <br>2.Click this link, Sign In to ISIS, Run the Bookmark: <a href="https://www.isis.ufl.edu/cgi-bin/nirvana?MDASTRAN=RSI-GRADES">ISIS</a> 
+          <br><br>
+          <a href="/profile"><button id= "backButton" class="scheduleButtons">Back</button></a>
+
           {% if results %}
           <table class="table-striped" id="results-table" cellpadding="5px">
           <p>YOUR DATA:</p>

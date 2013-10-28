@@ -11,6 +11,10 @@ urlpatterns = patterns('',
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+	#facebook
+	(r'^facebook/', include('django_facebook.urls')),
+	#(r'^accounts/', include('django_facebook.auth_urls')),
+
 
     url(r'^$', views.home, name="home"),
     

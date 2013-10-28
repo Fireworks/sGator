@@ -15,7 +15,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
                 
-            url = "http://www.registrar.ufl.edu/soc/201308/all/"
+            url = "http://www.registrar.ufl.edu/soc/201401/all/"
             page = urllib2.urlopen(url)
             soup = BeautifulSoup(page)
             list1 = list()      # list of categories

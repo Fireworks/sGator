@@ -12,6 +12,7 @@ from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_exempt   
 from pyquery import PyQuery
 import string
+import json
 
 def insert_space(string, integer):
     return string[0:integer] + ' ' + string[integer:]
@@ -22,7 +23,12 @@ def home(request):
 def generateSchedule(request):
     context = RequestContext(request)
     if request.user.is_authenticated():
-        return render(request, "schedule.html")
+        if request.is_ajax():
+            courses = json.loads(request.raw_post_data)
+            #todo: pass courses to algorithm
+            return HttpResponse(courses)
+        else:
+            return HttpResponse("Not an ajax request.")
     else:
         return render_to_response('nsi.html', context_instance=context)
     #ALGORITHM to be implemented or referenced here for this page

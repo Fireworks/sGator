@@ -11,43 +11,37 @@
                  <form action = "/courses/"><input Type="submit"  class="btn" value="Back To Search"></form>
 
                 <tr>
+                	<th>Add</th>
                     <th>Course Number</th>
-                    <th>Course Name</th>
                     <th>Section</th>
+                    <th class="col-hide">Course Name</th>
                     <th>Credits</th>
                     <th>Course Instructor</th>
                     <th>Lecture Day</th>
                     <th>Lecture Period</th>
-                    <th>Lecture Location</th>
-                    <th>Disc. Day</th>
-                    <th>Disc. Period</th>
-                    <th>Disc. Location</th>    
+                    <th class="col-hide">Lecture Location</th>
+                    <th class="col-hide">Disc. Day</th>
+                    <th class="col-hide">Disc. Period</th>
+                    <th class="col-hide">Disc. Location</th>    
                 </tr>
-                  {% for result in results %}
-                      
-                      <tr>
-                          <td> {{ result.name }}</td>
-                          <td>{{ result.cname }}</td>
-                          <td>{{ result.section }}</td>
-                          <td>{{ result.cedits }}</td>
-                          <td>{{ result.cinst }}</td>
-                          <td>{{ result.lday}}</td>
-                          <td>{{ result.ltime }}</td>
-                          {% if result.lbuild == ' '%}
-                          {% else %}
-                          <td>{{ result.lbuild}} {{result.lroom}}</td>
-                          {% endif %}
-                          
-                          
-                          {% if result.dday == ' '%}
-                          {% else %}
-                          <td>{{ result.dday}}</td>
-                          <td>{{ result.dtime }}</td>
-                          <td>{{ result.dbuild}} {{result.droom}}</td>
-                          {% endif %}
-                      </tr>
-                      
-                  {% endfor %}
+              {% for result in results %}
+                  	<tr>
+                  		<td class="plus">
+                  			<a class="course-add" course-id="{{ result.id }}">+</a>
+                  		</td>
+						<td>{{ result.name }}</td>
+						<td>{{ result.section }}</td>
+						<td class="col-hide">{{ result.cname }}</td>
+						<td>{{ result.cedits }}</td>
+						<td>{{ result.cinst }}</td>
+						<td>{{ result.lday }}</td>
+						<td>{{ result.ltime }}</td>
+						<td class="col-hide">{{ result.lbuild}} {{result.lroom}}</td>
+						<td class="col-hide">{{ result.dday}}</td>
+						<td class="col-hide">{{ result.dtime }}</td>
+						<td class="col-hide">{{ result.dbuild}} {{result.droom}}</td>
+					</tr>
+              {% endfor %}
             </table>
             {% else %}
 			 <p>To browse all courses leave the field blank and just press "Search."</p>

@@ -8,6 +8,11 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+#facebook
+#AUTH_USER_MODEL = 'django_facebook.FacebookCustomUser'
+FACEBOOK_APP_ID = '579603358778683'
+FACEBOOK_APP_SECRET = '8448511bcca487395a9a4f860b0aacbe'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -120,6 +125,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+	'django_facebook',
     'django.contrib.staticfiles',
     'django.contrib.markup',
     # Uncomment the next line to enable the admin:
@@ -171,18 +177,23 @@ LOGGING = {
 
 AUTHENTICATION_BACKENDS = (
     # Default backend
+	'django_facebook.auth_backends.FacebookBackend',
     'django.contrib.auth.backends.ModelBackend',
+	
     # `allauth` specific authentication methods, such as login by e-mail
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.tz",
-    "django.contrib.messages.context_processors.messages",)
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
+    'django_facebook.context_processors.facebook',
+)
 
 SOCIALACCOUNT_PROVIDERS = \
     { 'facebook':
