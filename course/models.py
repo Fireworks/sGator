@@ -25,6 +25,7 @@ class Course(models.Model):
 class UserProfile(models.Model):
     pastsc = models.CharField(max_length=200 ) #Schedule Model to replace Charfield
     cursc = models.CharField(max_length=200 )
+    courses = list()
     user = models.ForeignKey(User, unique=True)
     facebook_id = models.CharField(max_length=200 )
     facebook_email = models.CharField(max_length=200 )

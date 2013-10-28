@@ -14,21 +14,29 @@ from pyquery import PyQuery
 import string
 import json
 
+
+
 def insert_space(string, integer):
     return string[0:integer] + ' ' + string[integer:]
 
 def home(request):
     return render(request, "home.html")
 
+ 
 def generateSchedule(request):
     context = RequestContext(request)
     if request.user.is_authenticated():
         if request.is_ajax():
             courses = json.loads(request.raw_post_data)
+            request.user.get_profile().courses.append(courses)
             #todo: pass courses to algorithm
+            print request.user.get_profile().courses
             return HttpResponse(courses)
         else:
-            return HttpResponse("Not an ajax request.")
+            print request.user.get_profile().courses
+            courses = request.user.get_profile().courses
+            return render_to_response('schedule.html', {"courses": courses,}, context_instance=context)
+        
     else:
         return render_to_response('nsi.html', context_instance=context)
     #ALGORITHM to be implemented or referenced here for this page
