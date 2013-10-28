@@ -30,14 +30,13 @@ def generateSchedule(request):
             courses = request.raw_post_data
             request.user.get_profile().courses.append(courses)
             #todo: pass courses to algorithm
-            print request.user.get_profile().courses
             return HttpResponse(courses)
         else:
-            print request.user.get_profile().courses
             courses = request.user.get_profile().courses
-            #for course in courses:
-
-            return render_to_response('schedule.html', {"courses": courses,}, context_instance=context)
+            courseO = list() # list of courses based on given ID
+            for i in courses:
+                courseO.append(Course.objects.get(id__exact = i))
+            return render_to_response('schedule.html', {"courses": courseO,}, context_instance=context)
         
     else:
         return render_to_response('nsi.html', context_instance=context)
