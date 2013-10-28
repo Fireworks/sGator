@@ -12,7 +12,7 @@ ADMINS = (
 #AUTH_USER_MODEL = 'django_facebook.FacebookCustomUser'
 FACEBOOK_APP_ID = '579603358778683'
 FACEBOOK_APP_SECRET = '8448511bcca487395a9a4f860b0aacbe'
-
+FACEBOOK_LOGIN_DEFAULT_REDIRECT = 'http://schedulegator.com/'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
