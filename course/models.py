@@ -26,6 +26,8 @@ class UserProfile(models.Model):
     pastsc = models.CharField(max_length=200 ) #Schedule Model to replace Charfield
     cursc = models.CharField(max_length=200 )
     user = models.ForeignKey(User, unique=True)
+    facebook_id = models.CharField(max_length=200 )
+    facebook_email = models.CharField(max_length=200 )
 #tentative userprofile fields to be changed
     
     def __unicode__(self):
