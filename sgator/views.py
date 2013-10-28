@@ -27,7 +27,7 @@ def generateSchedule(request):
     context = RequestContext(request)
     if request.user.is_authenticated():
         if request.is_ajax():
-            courses = json.loads(request.raw_post_data)
+            courses = request.raw_post_data
             request.user.get_profile().courses.append(courses)
             #todo: pass courses to algorithm
             print request.user.get_profile().courses
@@ -35,6 +35,8 @@ def generateSchedule(request):
         else:
             print request.user.get_profile().courses
             courses = request.user.get_profile().courses
+            #for course in courses:
+
             return render_to_response('schedule.html', {"courses": courses,}, context_instance=context)
         
     else:

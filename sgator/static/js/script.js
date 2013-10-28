@@ -1,18 +1,15 @@
-var courses = [];
-
 $(document).ready(function(){
 	$(document).on('click', '.course-add', function(){
 		var cid = jQuery(this).attr('course-id');
-		courses.push(cid);
 
-		var json = JSON.stringify(courses);
+		var json = JSON.stringify(cid);
 		var csrftoken = $.cookie('csrftoken');
 		
 		$.ajax({
 			headers: {"X-CSRFToken": csrftoken},
 			url: '/schedule/',
 			type: 'POST',
-			data: json,
+			data: cid,
 			traditional: true,
 			dataType: 'html',
 			success: function(result){

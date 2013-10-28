@@ -3,18 +3,24 @@
 <div class="row-fluid">
 <div id="schedule-options" class="thumbnail box span4">
 	<h2>Options</h2>
-	Select courses:
-	<input id="select-courses" type="text" name="courses" placeholder="Enter course number" />
+	<table id="courses-list">
+		<tr>
+			<th>Course Number</th>
+			<th>Course Name</th>
+		</tr>
+	{% for course in courses %}
+		<tr>
+			<td>{{course}}</td>
+			<td>{{course}}</td>
+		</tr>
+	{% endfor %}
+	</table>
 	<br/>
 	Number of credits:
 	<input id="num-credits" type="number" name="credits" />
 	<br/><br/>
 	<button type="submit" class="btn btn-warning">Generate</button>
 </div>
-
-
-<p>{{courses}}</p>
-
 <div class="thumbnail box span8">
 	<table id="schedule-table" class="table table-bordered">
 		<tr>
