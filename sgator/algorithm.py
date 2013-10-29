@@ -6,7 +6,9 @@ def get_results(Courses):
     # For the multi-dimension construction of Results to work, 
     # need to initialize a list of empty lists.
     Results = []
+    num_courses = 0
     for course in Courses:
+        num_courses += 1
         course.replace(" ","") # Remove any spaces
         if course.isdigit(): # If a course entry has numbers, the user is requesting any section
             database_results = DB_Course.objects.filter(id = course)
@@ -28,12 +30,6 @@ def get_results(Courses):
 # example use: if( overlaps( Results[x][0], Results[x][1] )
 def overlaps(class1, class2):
     return any(t==t2 for t in class1[1] for t2 in class2[1])
-
-# example use: if( samecourse( Results[0], Results[1] )
-# Returns True if class1 is the same course by name or if the two Results are
-# both discussions or both lectures.
-def samecourse(class1, class2):
-    return (class1[0].name == class2[0].name) or (class1[2] == class2[2])
 
 def generate_schedules(Results):
     Possible_Schedules = []
