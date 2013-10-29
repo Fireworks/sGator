@@ -47,8 +47,10 @@ def samecourse(class1, class2):
 
 def generate_schedules(Results):
     Possible_Schedules = []
-    schedule = Schedule.__init__()
-    Possible_Schedules.append(generate_schedules_helper(schedule,Results,1))
+    for i in range(len(Results)):
+        schedule = Schedule.__init__()
+        schedule.add(Results[i][0])
+        Possible_Schedules.append(generate_schedules_helper(schedule,Results,i))
     return Possible_Schedules
 
 def generate_schedules_helper(schedule,Results,i):
