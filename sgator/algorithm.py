@@ -20,15 +20,25 @@ def get_results(Courses):
         discussion_days = (c for c in Results[i].dday if c is not " ")
         discussion_time = Results[i].dtime
         times = [{'day': day, 'time': time} for day, time in zip(lecture_days, lecture_time)] + [{'day': day, 'time': time} for day, time in zip(discussion_days, discussion_time)]
-        Results[i] = (Results[i], times)
+        if (Results[i].lday = '') # Set a flag equal to 1 if the section is a discussion
+            discussion_flag = 1
+        else
+            discussion_flag = 0
+        Results[i] = (Results[i], times, discussion_flag)
     return Results
 
 # example use: if( overlaps( Results[0], Results[1] )
 def overlaps(class1, class2):
     return any(t==t2 for t in class1[1] for t2 in class2[1])
 
+# example use: if( samecourse( Results[0], Results[1] )
+# Returns True if class1 is the same course by name or if the two Results are
+# both discussions or both lectures.
+def samecourse(class1, class2):
+    return (class1[0].name == class2[0].name) or (class1[2] == (class2[2]))
+
 # At this point, Results contains all the sections of all the courses the user requested
-#Possible_Schedules = list(Schedule(x) for x in Results[i][0] if Results[i][0].
+# Possible_Schedules = list(Schedule(x) for x in Results[i][0] if Results[i][0].
 Possible_Schedules = []
 # add all the partial schedules for the first course here...
 
@@ -44,14 +54,15 @@ Possible_Schedules = []
 
 def generate_schedules(Results):
     schedule = Schedule.__init__()
-    generate_schedules_helper(schedule,Results,1)
+    Possible_Schedules.append(generate_schedules_helper(schedule,Results,1))
 
 def generate_schedules_helper(schedule,Results,i):
     if i == len(Results): # base case
-        Possible_Schedules[len(Possible_Schedules)] = schedule
+        return schedule
     else:
         for j in range(1,len(Results)): # recursive case
             schedule2 = Schedule.__init__(schedule)
-            if not overlaps(Results[i],Results[j]): # only make a new schedule if there is no conflict
-                schedule2.add(Results[j])
+            # only make a new schedule if there is no conflict
+            if (not overlaps(Results[i],Results[j])) and (not samecourse(Results[i],Results[j])):
+                schedule2.add(Results[j][0])
                 generate_schedules_helper(schedule2,j)
