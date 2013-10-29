@@ -8,12 +8,11 @@ class Schedule(models.Model):
         # total credits in schedule
 
     def add(self,course):
-        for x in range(len(self.sections)):
-            if overlaps(course,self.sections(x)):
-                return False
-        self.sections[course.section] = course
-        self.credits = self.credits + course.credits
-        return True
+      #  for x in range(len(self.sections)):
+      #      if overlaps(course,self.sections(x)):
+      #          return False
+        self.sections.append(course)
+        self.credits += course.credits
 
     def remove(self,course):
         del self.sections[course.section]
