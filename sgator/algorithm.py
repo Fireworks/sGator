@@ -20,11 +20,11 @@ def get_results(Courses):
         discussion_days = (c for c in Results[i].dday if c is not " ")
         discussion_time = Results[i].dtime
         times = [{'day': day, 'time': time} for day, time in zip(lecture_days, lecture_time)] + [{'day': day, 'time': time} for day, time in zip(discussion_days, discussion_time)]
-        if (Results[i].lday = '') # Set a flag equal to 1 if the section is a discussion
+        discussion_flag = 0 # Set a flag equal to 1 if the section is a discussion
+        if (Results[i].lday = '') 
             discussion_flag = 1
-        else
-            discussion_flag = 0
         Results[i] = (Results[i], times, discussion_flag)
+    # At this point, Results contains all the sections of all the courses the user requested
     return Results
 
 # example use: if( overlaps( Results[0], Results[1] )
@@ -37,24 +37,19 @@ def overlaps(class1, class2):
 def samecourse(class1, class2):
     return (class1[0].name == class2[0].name) or (class1[2] == (class2[2]))
 
-# At this point, Results contains all the sections of all the courses the user requested
-# Possible_Schedules = list(Schedule(x) for x in Results[i][0] if Results[i][0].
-Possible_Schedules = []
-# add all the partial schedules for the first course here...
-
 #for i in range(1,len(Results)):
 #    # add every section from Results that match Courses_[i], if they don't overlap
 #    schedule = Schedule.__init__()
 #    schedule.add(Results(i))
 #    for j in range(1,len(Results)):
 #        schedule.add(Results(j))
-#        
-#        
 #    Possible_Schedules[i] = schedule
 
 def generate_schedules(Results):
+    Possible_Schedules = []
     schedule = Schedule.__init__()
     Possible_Schedules.append(generate_schedules_helper(schedule,Results,1))
+    return Possible_Schedules
 
 def generate_schedules_helper(schedule,Results,i):
     if i == len(Results): # base case
