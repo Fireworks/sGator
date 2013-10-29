@@ -32,10 +32,13 @@ def overlaps(class1, class2):
     return any(t==t2 for t in class1[1] for t2 in class2[1])
 
 # example use: if( samecourse( Results[0], Results[1] )
-# Returns True if class1 is the same course by name or if the two Results are
-# both discussions or both lectures.
+# Returns True if both classes are the same course by name
 def samecourse(class1, class2):
-    return (class1[0].name == class2[0].name) or (class1[2] == (class2[2]))
+    return (class1[0].name == class2[0].name)
+
+# Returns true if both classes are discussions or both are lectures
+def both_dl(class1, class2):
+    return class1[2] == class2[2]
 
 #for i in range(1,len(Results)):
 #    # add every section from Results that match Courses_[i], if they don't overlap
@@ -50,16 +53,32 @@ def generate_schedules(Results):
     for i in range(len(Results)):
         schedule = Schedule.__init__()
         schedule.add(Results[i][0])
-        Possible_Schedules.append(generate_schedules_helper(schedule,Results,i))
+        courses_in_schedule = 1
+        for j in range(i,len(Results)):
+            if (!overlaps( Results[courses_in_schedule-1][0], Results[j][0] )):
+                if (!samecourse( Results[courses_in_schedule-1][0], Results[j][0] )):
+                    if (!both_dl( Results[courses_in_schedule-1][0], Results[j][0] )):
+                        schedule.add(Results[j][0])
+                        courses_in_schedule += 1
+                # If the two are the same course and they don't overlap, that
+                # means we have two possible schedule, so make two schedules
+                # out of them
+                else 
+                    if (!both_dl( Results[courses_in_schedule-1][0], Results[j][0] )):
+                        
+
+
+        Possible_Schedules.append(schedule)
+
     return Possible_Schedules
 
-def generate_schedules_helper(schedule,Results,i):
-    if i == len(Results): # base case
-        return schedule
-    else:
-        for j in range(1,len(Results)): # recursive case
-            schedule2 = Schedule.__init__(schedule)
-            # only make a new schedule if there is no conflict
-            if (not overlaps(Results[i],Results[j])) and (not samecourse(Results[i],Results[j])):
-                schedule2.add(Results[j][0])
-                generate_schedules_helper(schedule2,j)
+#def generate_schedules_helper(schedule,Results,i):
+#    if i == len(Results): # base case
+#        return schedule
+#    else:
+#        for j in range(1,len(Results)): # recursive case
+#            schedule2 = Schedule.__init__(schedule)
+#            # only make a new schedule if there is no conflict
+#            if (not overlaps(Results[i],Results[j])) and (not samecourse(Results[i],Results[j])):
+#                schedule2.add(Results[j][0])
+#                generate_schedules_helper(schedule2,j)
