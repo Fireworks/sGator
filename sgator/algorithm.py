@@ -6,12 +6,14 @@ from sgator.models import Schedule
 
 def get_results(Courses):
     Results = []
+    num_courses = 0
     for course in Courses:
+        num_courses += 1
         course.replace(" ","") # Remove any spaces
         if course.isdigit(): # If a course entry has numbers, the user is requesting any section
-            Results += list(DB_Course.objects.filter(id = course))
+            Results[num_courses] += list(DB_Course.objects.filter(id = course))
         else: # If a course entry is just numbers, the user is requesting a specific section
-            Results += list(DB_Course.objects.filter(name__icontains = course)) # where section.name is the string name, ie "CEN3031"
+            Results[num_courses] += list(DB_Course.objects.filter(name__icontains = course)) # where section.name is the string name, ie "CEN3031"
     # At this point we should have a list of Courses in Jordan format
     for i in range(len(Results)):
         # split Results[i]/lday into list by ' 's, build list containing dictionary elements
@@ -32,10 +34,14 @@ def overlaps(class1, class2):
     return any(t==t2 for t in class1[1] for t2 in class2[1])
 
 # example use: if( samecourse( Results[0], Results[1] )
-# Returns True if class1 is the same course by name or if the two Results are
-# both discussions or both lectures.
+# Returns True if both classes are the same course by name
 def samecourse(class1, class2):
-    return (class1[0].name == class2[0].name) or (class1[2] == class2[2])
+    return class1[0].name == class2[0].name
+
+# example use: if( both_dl( Results[0], Results[1] )
+# Returns True if both classes are discussions or both are lectures
+def both_dl(class1, class2):
+    return class1[2] == class2[2]
 
 #for i in range(1,len(Results)):
 #    # add every section from Results that match Courses_[i], if they don't overlap
@@ -50,16 +56,19 @@ def generate_schedules(Results):
     for i in range(len(Results)):
         schedule = Schedule.__init__()
         schedule.add(Results[i][0])
-        Possible_Schedules.append(generate_schedules_helper(schedule,Results,i))
+        Possible_Schedules.extend(generate_schedules_helper(schedule,Results,i))
     return Possible_Schedules
 
 def generate_schedules_helper(schedule,Results,i):
+    possibles = []
     if i == len(Results): # base case
-        return schedule
+        possibles.append(schedule)
     else:
-        for j in range(1,len(Results)): # recursive case
-            schedule2 = Schedule.__init__(schedule)
-            # only make a new schedule if there is no conflict
-            if (not overlaps(Results[i],Results[j])) and (not samecourse(Results[i],Results[j])):
-                schedule2.add(Results[j][0])
-                generate_schedules_helper(schedule2,j)
+        # If element i+1 !overlap and is not same course, add it to schedule
+        # If element i+1 !overlap and is same course, but is different dl, add to sched
+        # If element i+1 !overlap and is same course, but is same dl, make new schedule
+
+        if (not overlaps(Results[i],Results[i+1])):
+           if ( 
+                possibles.extend( generate_schedules_helper(
+    return possibles
