@@ -13,10 +13,10 @@
 		<li>
 			<a href="/courses">Courses</a>
 		</li>
+		{% if user.is_anonymous%}
 		<li>
 			<a href="/about">About</a>
 		</li>
-		{% if user.is_anonymous%}
 		<li class="mobile-menu-item">
 			<a href="/accounts/login" data-toggle="modal">Sign In</a>
 		</li>
@@ -26,6 +26,9 @@
 		{% else %}
 		<li class="mobile-menu-item">
 			<a href="/profile">Profile</a>
+		</li>
+		<li>
+			<a href="/about">About</a>
 		</li>
 		<li class="mobile-menu-item">
 			<a href="/accounts/logout">Logout</a>
