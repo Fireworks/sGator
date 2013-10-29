@@ -35,7 +35,7 @@ def overlaps(class1, class2):
 # Returns True if class1 is the same course by name or if the two Results are
 # both discussions or both lectures.
 def samecourse(class1, class2):
-    return (class1[0].name == class2[0].name) or (class1[2] == (class2[2]))
+    return (class1[0].name == class2[0].name) or (class1[2] == class2[2])
 
 #for i in range(1,len(Results)):
 #    # add every section from Results that match Courses_[i], if they don't overlap
