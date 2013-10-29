@@ -12,7 +12,7 @@ class Schedule(models.Model):
       #      if overlaps(course,self.sections(x)):
       #          return False
         self.sections.append(course)
-        self.credits += course.credits
+        self.credits += course.cedits
 
     def remove(self,course):
         del self.sections[course.section]
