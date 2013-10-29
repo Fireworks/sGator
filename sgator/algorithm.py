@@ -5,27 +5,30 @@ from sgator.models import Schedule
 #Results = [] # We will query the database to fill this list with each section for each course in Courses
 
 def get_results(Courses):
+    # For the multi-dimension construction of Results to work, 
+    # need to initialize a list of empty lists.
     Results = []
+    for x in range(len(Courses)):
+        res.append([]) 
     num_courses = 0
     for course in Courses:
-        num_courses += 1
         course.replace(" ","") # Remove any spaces
         if course.isdigit(): # If a course entry has numbers, the user is requesting any section
-            Results[num_courses] += list(DB_Course.objects.filter(id = course))
+            piece = list(DB_Course.objects.filter(id = course))
         else: # If a course entry is just numbers, the user is requesting a specific section
-            Results[num_courses] += list(DB_Course.objects.filter(name__icontains = course)) # where section.name is the string name, ie "CEN3031"
-    # At this point we should have a list of Courses in Jordan format
-    for i in range(len(Results)):
-        # split Results[i]/lday into list by ' 's, build list containing dictionary elements
-        lecture_days = (c for c in Results[i].lday if c is not " ")
-        lecture_time = Results[i].ltime
-        discussion_days = (c for c in Results[i].dday if c is not " ")
-        discussion_time = Results[i].dtime
-        times = [{'day': day, 'time': time} for day, time in zip(lecture_days, lecture_time)] + [{'day': day, 'time': time} for day, time in zip(discussion_days, discussion_time)]
-        discussion_flag = 0 # Set a flag equal to 1 if the section is a discussion
-        if (Results[i].lday = '') 
-            discussion_flag = 1
-        Results[i] = (Results[i], times, discussion_flag)
+            piece = list(DB_Course.objects.filter(name__icontains = course))
+        for i in range(len(piece)):
+            lecture_days = (c for c in piece[i].lday if c is not " ")
+            lecture_time = piece[i].ltime
+            discussion_days = (c for c in piece[i].dday if c is not " ")
+            discussion_time = piece[i].dtime
+            times = [{'day': day, 'time': time} for day, time in zip(lecture_days, lecture_time)] + [{'day': day, 'time': time} for day, time in zip(discussion_days, discussion_time)]
+            discussion_flag = 0 # Set a flag equal to 1 if the section is a discussion
+            if (piece[i].lday = '') 
+                discussion_flag = 1
+            piece[i] = (Results[i], times, discussion_flag)
+            Results[num_courses].extend(piece[i])
+            num_courses += 1
     # At this point, Results contains all the sections of all the courses the user requested
     return Results
 
