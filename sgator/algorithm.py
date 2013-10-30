@@ -15,12 +15,11 @@ def get_results(Courses):
             database_results = DB_Course.objects.filter(name__icontains = course)
         sections = []
         for result in database_results:
-            lecture_days = [str(c) for c in result.lday if c is not " "]
+            lecture_days = [str(c) for c in result.lday if not c.isspace()]
             lecture_times = get_times(result.ltime)
-            lecture_time = str(result.ltime)
-            discussion_days = (str(c) for c in result.dday if c is not " ")
-            discussion_time = str(result.dtime)
-            times = [{'day': day, 'time': time} for day, time in zip(lecture_days, lecture_time)] + [{'day': day, 'time': time} for day, time in zip(discussion_days, discussion_time)]
+            discussion_days = [str(c) for c in result.dday if not c.isspace()]
+            discussion_times = get_times(result.dtime)
+            times = list(itertools.product(lecture_days, lecture_times)) + list(itertools.product(discussion_days, discussion_times))
             sections.append((result, times))
         Results.append(sections)
     # At this point, Results contains all the sections of all the courses the user requested
@@ -29,7 +28,16 @@ def get_results(Courses):
 
 def get_times(ltime):
     times = []
-    r = [int(str(time)) for time in ltime.split('-')]
+    r = [str(time) for time in ltime.split('-')]
+    for element in r:
+        if isdigit(element):
+            element = int(element)
+        elif element = "E1":
+            element = 12
+        elif element = "E2":
+            element = 13
+        elif element = "E3":
+            element = 14
     for i in range(r[len(r)-1] - r[0] + 1):
         times.append(int(str(ltime[0])) + i)
     return times
