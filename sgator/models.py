@@ -15,8 +15,5 @@ class Schedule(models.Model):
         self.credits = self.credits - course.credits
         # subtract out credits of course
 
-    def returnSchedule(self):
-        return self.sections.values()
-
-    def returnCredits(self):
-        return self.credits
+    def __unicode__(self):
+        return str(self.sections)
