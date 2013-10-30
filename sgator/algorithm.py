@@ -7,8 +7,6 @@ def get_results(Courses):
     # need to initialize a list of empty lists.
     Results = []
     for course in Courses:
-        num_courses += 1
-        course.replace(" ","") # Remove any spaces
         if course.isdigit(): # If a course entry has numbers, the user is requesting any section
             database_results = DB_Course.objects.filter(id = course)
         else: # If a course entry is just numbers, the user is requesting a specific section
