@@ -124,7 +124,7 @@ def pasth(request):
 			 #
 			 ## create variable in userprofile to store these schedules
 			 #courseHistory.append(tempSchedule); 
-			"""
+			#"""
 			
         return render_to_response('pasth.html', {"results": results,}, context_instance=context)
 
