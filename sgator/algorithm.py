@@ -6,7 +6,6 @@ def get_results(Courses):
     # For the multi-dimension construction of Results to work, 
     # need to initialize a list of empty lists.
     Results = []
-    num_courses = 0
     for course in Courses:
         num_courses += 1
         course.replace(" ","") # Remove any spaces
