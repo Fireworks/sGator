@@ -16,4 +16,4 @@ class Schedule(models.Model):
         # subtract out credits of course
 
     def __unicode__(self):
-        return str(self.sections
+        return self.sections

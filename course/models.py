@@ -18,9 +18,13 @@ class Course(models.Model):
     cinst = models.CharField(max_length=200)
     dept = models.CharField(max_length=200)
    
-    
     def __unicode__(self):  
-        return self.name
+        times = ""
+        if not lday == "":
+            times += "{} {}".format(lday, ltime)
+        if not dday == "":
+            times += ", {} {}".format(dday, dtime)
+        return "{} section {}, {}".format(name, section, times)
 
 class UserProfile(models.Model):
     pastsc = models.CharField(max_length=200 ) #Schedule Model to replace Charfield
