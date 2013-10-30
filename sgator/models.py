@@ -1,5 +1,4 @@
 from django.db import models
-from algorithm import overlaps
 
 class Schedule(models.Model):
     def __init__(self):
@@ -8,9 +7,6 @@ class Schedule(models.Model):
         # total credits in schedule
 
     def add(self,course):
-      #  for x in range(len(self.sections)):
-      #      if overlaps(course,self.sections(x)):
-      #          return False
         self.sections.append(course)
         self.credits += course.cedits
 
