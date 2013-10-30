@@ -1,7 +1,6 @@
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.db import models
-from django_facebook.models import FacebookModel
 
 class Course(models.Model):
     name = models.CharField(max_length=200)
@@ -23,13 +22,13 @@ class Course(models.Model):
     def __unicode__(self):  
         return self.name
 
-class UserProfile(FacebookModel):
+class UserProfile(models.Model):
     pastsc = models.CharField(max_length=200 ) #Schedule Model to replace Charfield
+	#courseHistory=models.Schedule()[]  make an array of past schedules?
     cursc = models.CharField(max_length=200 )
-    courses = list()
     user = models.ForeignKey(User, unique=True)
-    #facebook_id = models.BigIntegerField(blank=True, unique=True, null=True)
-    #facebook_email = models.CharField(max_length=200 )
+    facebook_id = models.CharField(max_length=200 )
+    facebook_email = models.CharField(max_length=200 )
 #tentative userprofile fields to be changed
     
     def __unicode__(self):
