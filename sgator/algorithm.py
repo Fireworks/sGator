@@ -32,16 +32,16 @@ def get_results(Courses):
     # At this point, Results contains all the sections of all the courses the user requested
     return Results
 
-# example use: if( overlaps( Results[0], Results[1] )
+# example use: if( overlaps( Results[x][0], Results[x][1] )
 def overlaps(class1, class2):
     return any(t==t2 for t in class1[1] for t2 in class2[1])
 
-# example use: if( samecourse( Results[0], Results[1] )
+# example use: if( samecourse( Results[y][0], Results[y][1] )
 # Returns True if both classes are the same course by name
 def samecourse(class1, class2):
     return class1[0].name == class2[0].name
 
-# example use: if( both_dl( Results[0], Results[1] )
+# example use: if( both_dl( Results[z][0], Results[z][1] )
 # Returns True if both classes are discussions or both are lectures
 def both_dl(class1, class2):
     return class1[2] == class2[2]
@@ -56,15 +56,16 @@ def both_dl(class1, class2):
 
 def generate_schedules(Results):
     Possible_Schedules = []
-    for i in range(len(Results)):
-        schedule = Schedule.__init__()
-        schedule.add(Results[i][0])
-        Possible_Schedules.extend(generate_schedules_helper(schedule,Results,i))
+    schedule = Schedule.__init__()
+    Possible_Schedules.extend(generate_schedules_helper(Results,0))
     return Possible_Schedules
 
-def generate_schedules_helper(schedule,Results,i):
+def generate_schedules_helper(Results,i):
     possibles = []
     if i == len(Results): # base case
+        return possibles
+    for j in range(len(Results[i])):
+         
         possibles.append(schedule)
     else:
         # If element i+1 !overlap and is not same course, add it to schedule
