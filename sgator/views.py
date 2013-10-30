@@ -112,10 +112,10 @@ def pasth(request):
 			
 			#begin by parsing variables from each course by each "td" 
 			pastClass = Course(); 
-			pastClass.name = models.CharField(max_length=200)
-			pastClass.section = models.CharField(max_length=200) #0000 for transfer classes
-			pastClass.cname = models.CharField(max_length=200)
-			pastClass.cedits = models.CharField(max_length=200)
+			pastClass.name = c
+			pastClass.section = c #0000 for transfer classes
+			pastClass.cname = c
+			pastClass.cedits = c
 			
 			#Put the course into a schedule object 
 			# FOR NOW EVERY COURSE IS ITS OWN "SCHEDULE" ---> FIX LATER 
