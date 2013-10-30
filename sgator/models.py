@@ -8,7 +8,7 @@ class Schedule(models.Model):
 
     def add(self,course):
         self.sections.append(course)
-        self.credits += course.cedits
+        #self.credits += course.cedits
 
     def remove(self,course):
         del self.sections[course.section]
