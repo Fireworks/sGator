@@ -29,16 +29,17 @@ def get_results(Courses):
 def get_times(ltime):
     times = []
     r = [str(time) for time in ltime.split('-')]
+    s = []
     for element in r:
-        if isdigit(element):
-            element = int(element)
-        elif element = "E1":
-            element = 12
-        elif element = "E2":
-            element = 13
-        elif element = "E3":
-            element = 14
-    for i in range(r[len(r)-1] - r[0] + 1):
+        if element.isdigit():
+            s.append(int(element))
+        elif element == "E1":
+            s.append(12)
+        elif element == "E2":
+            s.append(13)
+        elif element == "E3":
+            s.append(14)
+    for i in range(s[len(s)-1] - s[0] + 1):
         times.append(int(str(ltime[0])) + i)
     return times
 
