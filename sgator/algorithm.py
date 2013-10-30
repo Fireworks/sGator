@@ -43,7 +43,9 @@ def overlaps(class1, class2):
 def generate_schedules(Results):
     Possible_Schedules = []
     schedule = Schedule.__init__()
-    Possible_Schedules.extend(generate_schedules_helper(Results,0))
+    for possibility in itertools.product(*Results):
+        if all(not overlaps(s1, s2) for s1, s2 in itertools.combinations(possibility, 2)):
+            Possible_Schedules.append(possibility)
     return Possible_Schedules
 
 def generate_schedules_helper(Results,i):
