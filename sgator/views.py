@@ -106,25 +106,25 @@ def pasth(request):
             results.append(pq(c).text())
             #to be parsed and added to Schedule Model of User Profile Model when created
 			
-			'''
-			# work in progress 
-			#change above to get 'tr' 
+			 #"""
+			 ## work in progress 
+			 ##change above to get 'tr' 
+			 #
+			 ##begin by parsing variables from each course by each "td" 
+			 #pastClass = Course(); 
+			 #pastClass.name = c
+			 #pastClass.section = c #0000 for transfer classes
+			 #pastClass.cname = c
+			 #pastClass.cedits = c
 			
-			#begin by parsing variables from each course by each "td" 
-			pastClass = Course(); 
-			pastClass.name = c
-			pastClass.section = c #0000 for transfer classes
-			pastClass.cname = c
-			pastClass.cedits = c
-			
-			#Put the course into a schedule object 
-			# FOR NOW EVERY COURSE IS ITS OWN "SCHEDULE" ---> FIX LATER 
-			tempSchedule = Schedule(); 
-			tempSchedule.add(pastClass); 
-			
-			# create variable in userprofile to store these schedules
-			courseHistory.append(tempSchedule); 
-			'''
+			 ##Put the course into a schedule object 
+			 ## FOR NOW EVERY COURSE IS ITS OWN "SCHEDULE" ---> FIX LATER 
+			 #tempSchedule = Schedule(); 
+			 #tempSchedule.add(pastClass); 
+			 #
+			 ## create variable in userprofile to store these schedules
+			 #courseHistory.append(tempSchedule); 
+			"""
 			
         return render_to_response('pasth.html', {"results": results,}, context_instance=context)
 
