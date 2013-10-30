@@ -15,10 +15,13 @@ def get_results(Courses):
             database_results = DB_Course.objects.filter(name__icontains = course)
         sections = []
         for result in database_results:
-            lecture_days = [str(c) for c in result.lday if not c.isspace()]
-            lecture_times = get_times(result.ltime)
-            discussion_days = [str(c) for c in result.dday if not c.isspace()]
-            discussion_times = get_times(result.dtime)
+            lecture_days = lecture_times = discussion_days = discussion_times = []
+            if not result.lday == '':
+                lecture_days = [str(c) for c in result.lday if not c.isspace()]
+                lecture_times = get_times(result.ltime)
+            if not result.dday == '':
+                discussion_days = [str(c) for c in result.dday if not c.isspace()]
+                discussion_times = get_times(result.dtime)
             times = list(itertools.product(lecture_days, lecture_times)) + list(itertools.product(discussion_days, discussion_times))
             sections.append((result, times))
         Results.append(sections)
@@ -29,6 +32,7 @@ def get_results(Courses):
 def get_times(ltime):
     times = []
     r = [str(time) for time in ltime.split('-')]
+    print "r: {}".format(r)
     s = []
     for element in r:
         if element.isdigit():
@@ -39,6 +43,7 @@ def get_times(ltime):
             s.append(13)
         elif element == "E3":
             s.append(14)
+    print "s: {}".format(s)
     for i in range(s[len(s)-1] - s[0] + 1):
         times.append(int(str(ltime[0])) + i)
     return times
