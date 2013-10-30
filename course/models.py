@@ -20,11 +20,11 @@ class Course(models.Model):
    
     def __unicode__(self):  
         times = ""
-        if not lday == "":
-            times += "{} {}".format(lday, ltime)
-        if not dday == "":
-            times += ", {} {}".format(dday, dtime)
-        return "{} section {}, {}".format(name, section, times)
+        if not self.lday == "":
+            times += "{} {}".format(self.lday, self.ltime)
+        if not self.dday == "":
+            times += ", {} {}".format(self.dday, self.dtime)
+        return "{} section {}, {}".format(self.name, self.section, times)
 
 class UserProfile(models.Model):
     pastsc = models.CharField(max_length=200 ) #Schedule Model to replace Charfield
