@@ -18,7 +18,7 @@ class Course(models.Model):
     lbuild = models.CharField(max_length=200)
     cinst = models.CharField(max_length=200)
     dept = models.CharField(max_length=200)
-   
+    rmpr = models.CharField(max_length=200)
     
     def __unicode__(self):  
         return self.name
@@ -28,9 +28,7 @@ class UserProfile(FacebookModel):
     cursc = models.CharField(max_length=200 )
     courses = list()
     user = models.ForeignKey(User, unique=True)
-    #facebook_id = models.BigIntegerField(blank=True, unique=True, null=True)
-    #facebook_email = models.CharField(max_length=200 )
-#tentative userprofile fields to be changed
+  
     
     def __unicode__(self):
         return self.user.username + "'s User Profile"
