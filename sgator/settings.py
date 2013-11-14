@@ -16,7 +16,7 @@ FACEBOOK_LOGIN_DEFAULT_REDIRECT = 'http://schedulegator.com/'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'sqlite.db',                      # Or path to database file if using sqlite3.
+        'NAME': '/var/www/schedulegator.com/scheduleGator/sqlite.db',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -53,7 +53,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Auto-generated for local dev purposes
-PROJECT_PATH = os.path.realpath(os.path.join(os.path.dirname(__file__), os.pardir))
+PROJECT_PATH = '/var/www/schedulegator.com/scheduleGator/'
 print(PROJECT_PATH)
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
@@ -69,7 +69,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = os.path.join(PROJECT_PATH, 'static')
+STATIC_ROOT = '/var/www/schedulegator.com/scheduleGator/static/'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -77,8 +77,8 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    os.path.join(os.path.dirname(__file__), 'static'),
-    os.path.join(PROJECT_PATH, 'vendor/static'),
+    '/var/www/schedulegator.com/scheduleGator/sgator/static',
+    '/var/www/schedulegator.com/scheduleGator/vendor/static'
 )
 
 # List of finder classes that know how to find static files in
@@ -205,7 +205,7 @@ SOCIALACCOUNT_PROVIDERS = \
 LOGIN_REDIRECT_URL = "/"
 
 try:
-    from ama.settings_local import *
+    from sgator.settings_local import *
     print("Using local settings...")
 except ImportError:
     pass
