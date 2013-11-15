@@ -4,4 +4,7 @@ django-tastypie
 BeautifulSoup4
 pyquery
 django-registration
+cssselect
+lxml
+pil
 Django_facebook
