@@ -10,8 +10,9 @@ def get_results(Courses):
         if course.isdigit(): # If a course entry has numbers, the user is requesting any section
             database_results = DB_Course.objects.filter(id = course)
         else: # If a course entry is just numbers, the user is requesting a specific section
-            database_results = DB_Course.objects.filter(name__icontains = course)
+            database_results = DB_Course.objects.filter(name__iexact = course)
         sections = []
+        print database_results
         for result in database_results:
             lecture_days = lecture_times = discussion_days = discussion_times = []
             if not result.lday == ' ':
@@ -28,7 +29,6 @@ def get_results(Courses):
     return Results
 
 def get_times(ltime):
-    times = []
     r = [str(time) for time in ltime.split('-')]
     s = []
     for element in r:
@@ -40,8 +40,12 @@ def get_times(ltime):
             s.append(13)
         elif element == "E3":
             s.append(14)
+    if len(s) <= 0:
+        print "Error!"
+        return ["Error!"]
+    times = []
     for i in range(s[len(s)-1] - s[0] + 1): 
-        times.append(int(str(ltime[0])) + i)
+        times.append(int(str(s[0])) + i)
     return times
 
 # example use: if( overlaps( Results[x][0], Results[x][1] ))

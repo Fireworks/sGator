@@ -21,7 +21,7 @@ class Course(models.Model):
     rmpr = models.CharField(max_length=200)
     
     def __unicode__(self):
-        time = ""
+        times = ""
         if not self.lday == "":
             times += "{} {}".format(self.lday, self.ltime)
         if not self.dday == "":
