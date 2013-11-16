@@ -12,7 +12,6 @@ def get_results(Courses):
         else: # If a course entry is just numbers, the user is requesting a specific section
             database_results = DB_Course.objects.filter(name__iexact = course)
         sections = []
-        print database_results
         for result in database_results:
             lecture_days = lecture_times = discussion_days = discussion_times = []
             if result.lbuild == 'WEB': # Special handler for WEB lectures
@@ -35,21 +34,20 @@ def get_results(Courses):
     return Results
 
 def get_times(ltime):
-    r = [str(time) for time in ltime.split('-')]
-    s = []
-    for element in r:
+    if len(ltime)==4 and '-' not in ltime:
+        ltime = ltime[0:2] + '-' + ltime[2:4]
+    time_strings = [str(time) for time in ltime.split('-')]
+    time_ints = []
+    special_cases = {'E1':12, 'E2':13, 'E3':14, 'TBA':0}
+    for element in time_strings:
         if element.isdigit():
-            s.append(int(element))
-        elif element == "E1":
-            s.append(12)
-        elif element == "E2":
-            s.append(13)
-        elif element == "E3":
-            s.append(14)
-    times = []
-    for i in range(s[len(s)-1] - s[0] + 1): 
-        times.append(int(str(s[0])) + i)
-    return times
+            time_ints.append(int(element))
+        if element in special_cases:
+            time_ints.append(special_cases[element])
+    if len(time_ints)==2:
+        return range(time_ints[0], time_ints[1]+1)
+    else:
+        return time_ints
 
 # example use: if( overlaps( Results[x][0], Results[x][1] ))
 def overlaps(class1, class2):
