@@ -19,7 +19,10 @@
 	Number of credits:
 	<input id="num-credits" type="number" name="credits" />
 	<br/><br/>
-	<button type="submit" class="btn btn-warning">Generate</button>
+	<FORM METHOD="POST" ACTION="/schedule/">
+	<INPUT TYPE="submit" VALUE="Generate" class="btn btn-warning" name="Generate">
+	<INPUT TYPE="submit" VALUE="Clear Generated Schedule" class="btn btn-warning" name="clear">
+	</FORM>
 </div>
 <div class="thumbnail box span8">
 	<table id="schedule-table" class="table table-bordered">
@@ -198,6 +201,46 @@
 			<td>
 			</td>
 		</tr>
+	</table>
+
+
+	<p>DEBUG TABLE</p>
+	<table style = "border:1px solid black;" id="courses-list generated" class="table-striped" cellpadding="5px">
+		
+	{% for result in results %}
+	<p><b> NEW SCHEDULE</b></p>
+	{% for course in result %}
+		<tr>
+                	
+                    <th>Course Number</th>
+                    <th>Section</th>
+                    <th >Course Name</th>
+                    <th>Credits</th>
+                  
+                    <th>Lecture Day</th>
+                    <th>Lecture Period</th>
+                
+                    <th>Disc. Day</th>
+                    <th >Disc. Period</th>
+               
+                </tr>
+             
+                  	<tr>
+                  		
+						<td>{{ course.name }}</</td>
+						<td>{{ course.section }}</td>
+						<td >{{ course.cname }}</td>
+						<td>{{ course.cedits }}</td>
+						
+						<td>{{ course.lday }}</td>
+						<td>{{ course.ltime }}</td>
+						
+						<td >{{ course.dday}}</td>
+						<td >{{ course.dtime }}</td>
+						
+					</tr>
+	{% endfor %}
+	{% endfor %}
 	</table>
 </div>
 </div>

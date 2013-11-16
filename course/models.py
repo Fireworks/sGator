@@ -30,12 +30,10 @@ class Course(models.Model):
 
 class UserProfile(FacebookModel):
     pastsc = models.CharField(max_length=200 ) #Schedule Model to replace Charfield
-    cursc = models.CharField(max_length=200 )
+    cursc = list()
     courses = list()
     user = models.ForeignKey(User, unique=True)
-    #facebook_id = models.BigIntegerField(blank=True, unique=True, null=True)
-    #facebook_email = models.CharField(max_length=200 )
-    #tentative userprofile fields to be changed
+   
 
     def __unicode__(self):
         return self.user.username + "'s User Profile"
