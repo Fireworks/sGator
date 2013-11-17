@@ -6,15 +6,104 @@ import re
 import string
 from bs4 import BeautifulSoup
 from pyquery import PyQuery
+from optparse import make_option
 
 
+class LinksParser(HTMLParser.HTMLParser):
+  def __init__(self):
+    HTMLParser.HTMLParser.__init__(self)
+    self.recording = 0
+    self.data = []
+    self.data2 = []
+    self.isName = False
+    
+  def handle_starttag(self, tag, attributes):
+    if tag != 'div':
+      return
+    if self.recording:
+      self.recording += 1
+      return
+    for name, value in attributes:
+      if name == 'class' and value == 'profName':
+        self.isName = True
+        break
+      elif name == 'class' and value == 'profAvg':
+        break
+    else:
+      return
+    self.recording = 1
 
+  def handle_endtag(self, tag):
+    if tag == 'div' and self.recording:
+      self.recording -= 1
+
+  def handle_data(self, data):
+    if self.recording and not self.isName:
+      self.data.append(data)
+    elif self.recording and self.isName:
+      self.data2.append(data)
+      self.isName = False
+
+def getrmp(profName,count):
+        
+        iquery = profName
+        query = iquery.split(',')
+        
+        if iquery == 'STAFF' or iquery == 'WEB':
+            rating = 'Not Available'
+            return rating
+
+        s = 0
+        for c in query:
+           #print str(s) +  c
+            if s == 0:
+                lastName = c # get first 'last name' in list of professors
+            elif s == 1:
+                tempc =  c.split()
+                firstName =  tempc[0]
+                #get first name corresponding to last name
+            s = s+1
+            
+        p = LinksParser()  
+        url = "http://www.ratemyprofessors.com/SelectTeacher.jsp?searchName="+str(lastName)+"&search_submit1=Search&sid=1100"
+        try:
+            page = urllib2.urlopen(url)
+            pages = page.read()
+            p.feed(pages)
+            p.close()
+            name = lastName+ ', ' + firstName
+            try:
+              rating = p.data[p.data2.index(name)]
+            except: 
+              rating = 'Not Available'
+        except:
+            name = lastName+ ', ' + firstName
+            rating = 'Not available'
+
+  
+        #print 'Professor Name: '+name + ' -> RateMyProfessor Rating: '+rating
+        if count == 0:
+            print "Gathering Professor Ratings"
+        return rating
+    
+        
+    
 class Command(BaseCommand):
-    args = ''
+    
     help = 'Updates the Database'
+    option_list = BaseCommand.option_list + (
+        make_option('-r','--rating',
+            action='store_true',
+            dest='rating',
+            default=False,
+            help='Updates the database with RateMyProfessor Ratings'),
+        )
+
 
     def handle(self, *args, **options):
-                
+            updateR = False
+            if options['rating']:
+                updateR = True    
             url = "http://www.registrar.ufl.edu/soc/201401/all/"
             page = urllib2.urlopen(url)
             soup = BeautifulSoup(page)
@@ -40,8 +129,9 @@ class Command(BaseCommand):
                     
                     started = False
                     moveA = False
+                    count = 0
                     y = 0
-                    g = Course('0','0','0','0','0','0','0','0','0','0','0','0','0','0','0')
+                    g = Course('0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0')
                     pq = PyQuery(pages)
                     tag = pq('td')
                     index = list2.index(website)
@@ -50,17 +140,18 @@ class Command(BaseCommand):
                         if (pq(c).text().__len__() == 8 and pq(c).text()[3:4] == " ") or (pq(c).text().__len__() == 9 and pq(c).text()[3:4] == " "):
                                 y = 0
                                 x= x+1
+                                
                                 if g.name != '0':
                                     g.dept = list1[index] # Department added to each course
                                     g.save()
                                     
-                                g = Course(x,' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ')
+                                g = Course(x,' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ')
                                 g.name = pq(c).text()
                                 started = True
                                 moveA = False
                                 
                         if (not (pq(c).text().__len__() == 8 and pq(c).text()[3:4] == " ") or (pq(c).text().__len__() == 9 and pq(c).text()[3:4] == " ")) and started == True:
-                                y = y+1        
+                                y = y+1
                                 if y == 7 and moveA != True:
                                      g.lday = pq(c).text()
                                 if y == 21 and moveA != True:
@@ -87,7 +178,10 @@ class Command(BaseCommand):
                                      g.cname = pq(c).text()
                                 if y == 13 and moveA != True:
                                      g.cinst = pq(c).text()
-
+                                     if updateR:
+                                         g.rmpr = getrmp(g.cinst,count)
+                                         count = count +1
+                                     
                                 if y == 6 and moveA == True:
                                      g.section = pq(c).text()
                                 if y == 7 and moveA == True:
@@ -112,5 +206,8 @@ class Command(BaseCommand):
                                      g.cname = pq(c).text()
                                 if y == 14 and moveA == True:
                                      g.cinst = pq(c).text()
+                                     if updateR:
+                                         g.rmpr = getrmp(g.cinst,count)
+                                         count = count +1
                                      
 
