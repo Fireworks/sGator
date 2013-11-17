@@ -20,19 +20,24 @@ class Course(models.Model):
     dept = models.CharField(max_length=200)
     rmpr = models.CharField(max_length=200)
     
-    def __unicode__(self):  
-        return self.name
+    def __unicode__(self):
+        times = ""
+        if not self.lday == "":
+            times += "{} {}".format(self.lday, self.ltime)
+        if not self.dday == "":
+            times += ", {} {}".format(self.dday, self.dtime)
+        return "{} section {}, {}".format(self.name, self.section, times)
 
 class UserProfile(FacebookModel):
     pastsc = models.CharField(max_length=200 ) #Schedule Model to replace Charfield
-    cursc = models.CharField(max_length=200 )
+    cursc = list()
     courses = list()
     user = models.ForeignKey(User, unique=True)
-  
-    
+   
+
     def __unicode__(self):
         return self.user.username + "'s User Profile"
-    
+
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)

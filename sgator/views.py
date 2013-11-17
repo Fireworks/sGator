@@ -13,7 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 from pyquery import PyQuery
 import string
 import json
-
+import algorithm
 
 
 def insert_space(string, integer):
@@ -22,25 +22,66 @@ def insert_space(string, integer):
 def home(request):
     return render(request, "home.html")
 
- 
+@csrf_exempt  
 def generateSchedule(request):
     context = RequestContext(request)
     if request.user.is_authenticated():
-        if request.is_ajax():
+        if request.is_ajax():  #Justin's Toast
             courses = request.raw_post_data
             request.user.get_profile().courses.append(courses)
-            #todo: pass courses to algorithm
             return HttpResponse(courses)
         else:
+            tcourses = list()
+            templist = list()
+            if request.POST.get('clear'):
+                del request.user.get_profile().cursc[0:len(request.user.get_profile().cursc)]  #CLEAR temporary list of schedules generated
+            if request.POST.get('Generate'):
+                #Make Call To algorithm here generate button was clicked
+                tcourses = algorithm.get_results(request.user.get_profile().courses)   #temporary courses chosen added to queue per user not to be lost after refresh
+                if len(tcourses) > 0:
+                    results = algorithm.generate_schedules(tcourses)
+                    #print results
+                    request.user.get_profile().cursc.insert(0,results)  #place in current user schedule (temporary)
+                    templist = list() #Translating Schedule Model back to Course model for template tag interpretation
+                    for s in request.user.get_profile().cursc[0]: #Most recent generated schedule
+                        templist2 = list()
+                        for c in s.sections:
+                            templist2.append(c)
+                        templist.append(templist2)
+                    del request.user.get_profile().courses[0:len(request.user.get_profile().courses)] #If generated, the temporary courses are removed from the table and the User object
+            
+                else:
+                    templist = request.user.get_profile().cursc
+                    templist2 = list()#Translating Schedule Model back to Course model for template tag interpretation
+                    if len(templist) > 0:
+                        for s in templist[0]:
+                            templist3 = list()
+                            for c in s.sections:
+                                templist3.append(c)
+                            templist2.append(templist3)
+                    templist = templist2
+                    
+            else:
+                templist = request.user.get_profile().cursc
+                templist2 = list()#Translating Schedule Model back to Course model for template tag interpretation
+                if len(templist) > 0:
+                    
+                    for s in templist[0]:
+                        templist3 = list()
+                        for c in s.sections:
+                            templist3.append(c)
+                        templist2.append(templist3)
+                templist = templist2
+                    
             courses = request.user.get_profile().courses
-            courseO = list() # list of courses based on given ID
+            courseO = list() # list of courses based on given ID for courses to be generated -> Cleared on generate!
             for i in courses:
                 courseO.append(Course.objects.get(id__exact = i))
-            return render_to_response('schedule.html', {"courses": courseO,}, context_instance=context)
+            return render_to_response('schedule.html', {"courses": courseO,"results": templist,}, context_instance=context)
         
     else:
         return render_to_response('nsi.html', context_instance=context)
-    #ALGORITHM to be implemented or referenced here for this page
+  
     
 def profile(request):
     context = RequestContext(request)
