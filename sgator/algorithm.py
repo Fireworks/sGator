@@ -48,7 +48,31 @@ def get_times(ltime):
         return range(time_ints[0], time_ints[1]+1)
     else:
         return time_ints
+    
+def formatDisplay(results):
+    cperiods = [[] for i in range(14)]
+    #pass through one schedule at a time from views
+    
+    for c in results.sections:
+        ltime = get_times(c.ltime)
+            #print ltime #get lecture times of each course
+        dtime = get_times(c.dtime)
+            #print dtime #get discussion times of each course
+        for t in ltime: #add to spot based on lecture time
+            try:
+                cperiods[t-1].append(c) # for every period in that course, add it to that period list'
+                    #print "ADDING L " + str(c) + " TO INDEX " + str(t)   
+            except:
+                cperiods[13].append(c) #edge cases excluded, added later in views
+        for d in dtime: #add to spot based on discussion time
+            try:
+                cperiods[d-1].append(c) 
+                    #print "ADDING D " + str(c) + " TO INDEX " + str(d)   
+            except:
+                cperiods[13].append(c)
+    return cperiods
 
+                
 # example use: if( overlaps( Results[x][0], Results[x][1] ))
 def overlaps(class1, class2):
     return any((t==t2 and not(t==('B', 0) or t2==('B', 0))) for t in class1[1] for t2 in class2[1])
