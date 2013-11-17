@@ -205,33 +205,21 @@
 
 
 	<p>DEBUG TABLE</p>
-	<table style = "border:1px solid black;" id="courses-list generated" class="table-striped" cellpadding="5px">
+
 		
 	{% for result in results %}
-	<p><b> NEW SCHEDULE</b></p>
-	{% for course in result %}
-		<tr>
-                	
-                    <th>Course Number</th>
-                    <th>Section</th>
-                    <th >Course Name</th>
-                    <th>Credits</th>
-                  
-                    <th>Lecture Day</th>
-                    <th>Lecture Period</th>
-                
-                    <th>Disc. Day</th>
-                    <th >Disc. Period</th>
-               
-                </tr>
-             
+	<p><b> NEW SCHEDULE #{{forloop.counter}}</b></p>
+	{% for period in result %}  
+    {% for course in period %}
+    <table style = "border:1px solid black;" id="debuglist" class="table-striped" cellpadding="5px">
                   	<tr>
-                  		
-						<td>{{ course.name }}</</td>
+                  		<td>PERIOD #{{forloop.parentloop.counter}}</td>  <!--Use this forloop variable to keep track of what period you're in-->
+						<td>{{ course.name }}</td>
 						<td>{{ course.section }}</td>
 						<td >{{ course.cname }}</td>
+			<!--		{% if course.cedits == '3' %}   Something like this line here will help you see discussion vs lecture times in a given period. -->
 						<td>{{ course.cedits }}</td>
-						
+				<!--		{%endif%}  -->
 						<td>{{ course.lday }}</td>
 						<td>{{ course.ltime }}</td>
 						
@@ -239,9 +227,13 @@
 						<td >{{ course.dtime }}</td>
 						
 					</tr>
-	{% endfor %}
-	{% endfor %}
+	
 	</table>
+
+	{% endfor %}
+	{% endfor %}
+	{% endfor %}
+
 </div>
 </div>
 {%endblock%}

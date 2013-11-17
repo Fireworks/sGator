@@ -33,48 +33,42 @@ def generateSchedule(request):
         else:
             tcourses = list()
             templist = list()
+            generated = False
             if request.POST.get('clear'):
                 del request.user.get_profile().cursc[0:len(request.user.get_profile().cursc)]  #CLEAR temporary list of schedules generated
+                del request.user.get_profile().courses[0:len(request.user.get_profile().courses)] #If generated, the temporary courses are removed from the table and the User object
             if request.POST.get('Generate'):
+                generated = True
                 #Make Call To algorithm here generate button was clicked
                 tcourses = algorithm.get_results(request.user.get_profile().courses)   #temporary courses chosen added to queue per user not to be lost after refresh
                 if len(tcourses) > 0:
                     results = algorithm.generate_schedules(tcourses)
                     #print results
-                    request.user.get_profile().cursc.insert(0,results)  #place in current user schedule (temporary)
-                    templist = list() #Translating Schedule Model back to Course model for template tag interpretation
-                    for s in request.user.get_profile().cursc[0]: #Most recent generated schedule
-                        templist2 = list()
-                        for c in s.sections:
-                            templist2.append(c)
-                        templist.append(templist2)
-                    del request.user.get_profile().courses[0:len(request.user.get_profile().courses)] #If generated, the temporary courses are removed from the table and the User object
-            
+                    for i in range(0,len(results)):
+                        templist.insert(i,algorithm.formatDisplay(results[i]))# for each schedule, get correct formatting for template tags, schedule1 ->templist(1) and so on....
+
+                    request.user.get_profile().cursc.insert(0,templist)  #place in current user schedule (temporary)
+                    #print templist
+                    for i,s in enumerate(results): #Most recent generated schedule
+                        for c in s.sections: # for each schedule, add the extra classes that don't have correct time/date i.e. WEB '' or TBA
+                            if (c.ltime == '') or (c.ltime == 'WEB') or (c.ltime == 'TBA'):
+                                templist[i][13].append(c)
+                    #print str(templist) 
+
                 else:
-                    templist = request.user.get_profile().cursc
-                    templist2 = list()#Translating Schedule Model back to Course model for template tag interpretation
-                    if len(templist) > 0:
-                        for s in templist[0]:
-                            templist3 = list()
-                            for c in s.sections:
-                                templist3.append(c)
-                            templist2.append(templist3)
-                    templist = templist2
-                    
+                    templist = request.user.get_profile().cursc      #hold value on refresh
             else:
-                templist = request.user.get_profile().cursc
-                templist2 = list()#Translating Schedule Model back to Course model for template tag interpretation
-                if len(templist) > 0:
-                    
-                    for s in templist[0]:
-                        templist3 = list()
-                        for c in s.sections:
-                            templist3.append(c)
-                        templist2.append(templist3)
-                templist = templist2
-                    
+                if generated:  #temporary IF, may have bug where more than 1 schedule will not appear-> here because if you click generate more than once, it will keep adding to schedule
+                    for s in request.user.get_profile().cursc:
+                        for v in s:
+                            templist.append(v)
+                    generated = false
+                else:
+                    if len(request.user.get_profile().cursc) > 0:
+                        templist = request.user.get_profile().cursc[0]                   
+            #print templist  
             courses = request.user.get_profile().courses
-            courseO = list() # list of courses based on given ID for courses to be generated -> Cleared on generate!
+            courseO = list() # list of courses based on given ID for courses to be generated 
             for i in courses:
                 courseO.append(Course.objects.get(id__exact = i))
             return render_to_response('schedule.html', {"courses": courseO,"results": templist,}, context_instance=context)
