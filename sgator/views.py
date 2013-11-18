@@ -38,22 +38,20 @@ def generateSchedule(request):
                 del request.user.get_profile().cursc[0:len(request.user.get_profile().cursc)]  #CLEAR temporary list of schedules generated
                 del request.user.get_profile().courses[0:len(request.user.get_profile().courses)] #If generated, the temporary courses are removed from the table and the User object
             if request.POST.get('Generate'):
+                if request.POST.get('numc'):
+                    numc = int(request.POST.get('numc'))
+                else: numc = 4
+                print numc
                 generated = True
                 #Make Call To algorithm here generate button was clicked
                 tcourses = algorithm.get_results(request.user.get_profile().courses)   #temporary courses chosen added to queue per user not to be lost after refresh
                 if len(tcourses) > 0:
-                    results = algorithm.generate_schedules(tcourses)
+                    results = algorithm.generate_schedules(request.user.get_profile().courses,numc)
                     #print results
                     for i in range(0,len(results)):
-                        templist.insert(i,algorithm.formatDisplay(results[i]))# for each schedule, get correct formatting for template tags, schedule1 ->templist(1) and so on....
-
+                        templist.insert(i,(results[i]))# for each schedule, get correct formatting for template tags, schedule1 ->templist(1) and so on....
+                            #Need t oinsert formatdisplay() method for front end for posible new schedule list type
                     request.user.get_profile().cursc.insert(0,templist)  #place in current user schedule (temporary)
-                    #print templist
-                    for i,s in enumerate(results): #Most recent generated schedule
-                        for c in s.sections: # for each schedule, add the extra classes that don't have correct time/date i.e. WEB '' or TBA
-                            if (c.ltime == '') or (c.ltime == 'WEB') or (c.ltime == 'TBA'):
-                                templist[i][13].append(c)
-                    #print str(templist) 
 
                 else:
                     templist = request.user.get_profile().cursc      #hold value on refresh
@@ -71,6 +69,7 @@ def generateSchedule(request):
             courseO = list() # list of courses based on given ID for courses to be generated 
             for i in courses:
                 courseO.append(Course.objects.get(id__exact = i))
+            
             return render_to_response('schedule.html', {"courses": courseO,"results": templist,}, context_instance=context)
         
     else:
