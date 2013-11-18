@@ -15,11 +15,11 @@
 		</tr>
 	{% endfor %}
 	</table>
-	<br/>
-	Number of credits:
-	<input id="num-credits" type="number" name="credits" />
-	<br/><br/>
 	<FORM METHOD="POST" ACTION="/schedule/">
+	<br/>
+	Number of Courses:
+	<input TYPE="text" id="num-courses" type="number" name="numc" size="5"/>
+	<br/><br/>
 	<INPUT TYPE="submit" VALUE="Generate" class="btn btn-warning" name="Generate">
 	<INPUT TYPE="submit" VALUE="Clear Generated Schedule" class="btn btn-warning" name="clear">
 	</FORM>
@@ -209,11 +209,11 @@
 		
 	{% for result in results %}
 	<p><b> NEW SCHEDULE #{{forloop.counter}}</b></p>
-	{% for period in result %}  
-    {% for course in period %}
+	{% for course in result %}  
+   
     <table style = "border:1px solid black;" id="debuglist" class="table-striped" cellpadding="5px">
                   	<tr>
-                  		<td>PERIOD #{{forloop.parentloop.counter}}</td>  <!--Use this forloop variable to keep track of what period you're in-->
+                  	  <!--Use this forloop variable to keep track of what period you're in-->
 						<td>{{ course.name }}</td>
 						<td>{{ course.section }}</td>
 						<td >{{ course.cname }}</td>
@@ -230,7 +230,7 @@
 	
 	</table>
 
-	{% endfor %}
+	
 	{% endfor %}
 	{% endfor %}
 
