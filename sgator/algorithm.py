@@ -102,6 +102,7 @@ def findID(i): #will query database to find and return given courses, in this ca
 
 
 def checkConflict(list1):
+    count = 0
     btemp = list()
     temp = list()
     btemp = checkLect(list1)
@@ -124,13 +125,17 @@ def checkConflict(list1):
                     if (c1Lc2DT and c1Lc2DD) or (c1Dc2LT and c1Dc2LD):
                             conflict = True
                             #print "Conflict with Course " + str(tempObject) + str(tempObject.id) +" AND " + str(v) + str(v.id)
-               
+                    else: count = count + 1
                 #print conflict
             size = size - 1
-            x = size -1 
-        #print "CONFLICT BEFORE APPEND" + str(conflict)    
+            x = size -1
+            #if count == 15:  #Here is where we set max number of schedules to display/give to the user
+                #return temp
+        #print "CONFLICT BEFORE APPEND" + str(conflict)
+        print str(len(temp))
         if not conflict:
-            temp.append(lst)   
+            temp.append(lst)
+            
    #THEN KNOW WHEN CHECKING DISCUSSION/LECTURE AND VICE VERSA
         
     return temp

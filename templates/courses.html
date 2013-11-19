@@ -29,7 +29,14 @@
                   		<td class="plus">
                   			<a class="course-add" course-id="{{ result.id }}">+</a>
                   		</td>
-						<td><a href="http://www.registrar.ufl.edu/cdesc?crs=" target = "external">{{ result.name }}</a></td>
+            <script type="text/javascript" language="javascript">
+            openPage = function(name) {
+            var url = "http://www.registrar.ufl.edu/cdesc?crs="+name;
+            var win=window.open(url, '_blank');
+            win.focus();
+            }
+            </script>
+						<td><a href ="javascript:openPage('{{result.name}}')">{{result.name}}</a></td>
 						<td>{{ result.section }}</td>
 						<td class="col-hide">{{ result.cname }}</td>
 						<td>{{ result.cedits }}</td>
