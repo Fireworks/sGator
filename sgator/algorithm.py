@@ -132,7 +132,7 @@ def checkConflict(list1):
             #if count == 15:  #Here is where we set max number of schedules to display/give to the user
                 #return temp
         #print "CONFLICT BEFORE APPEND" + str(conflict)
-        print str(len(temp))
+        #print str(len(temp))
         if not conflict:
             temp.append(lst)
             

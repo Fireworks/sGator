@@ -225,7 +225,11 @@
 						
 						<td >{{ course.dday}}</td>
 						<td >{{ course.dtime }}</td>
-						
+					
+						{%if course.d2day %}
+                        <td>{{ course.d2day }}</td>           
+                        <td>{{ course.d2time }}</td>        
+                        {%endif %}
 					</tr>
 	
 	</table>
@@ -233,7 +237,17 @@
 	
 	{% endfor %}
 	{% endfor %}
-
+<script type="text/javascript" language="javascript">
+             openPage = function(name) {
+            var url = "http://campusmap.ufl.edu/?sched="+name;
+            var win=window.open(url, '_blank');
+            win.focus();
+            }
+ </script>
+						
+{% for link in cmaps %}
+<p><a href ="javascript:openPage('{{link}}')">Campus Map for Course Schedule#{{forloop.counter}}</a></p>
+{% endfor %}
 </div>
 </div>
 {%endblock%}

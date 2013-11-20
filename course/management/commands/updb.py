@@ -209,5 +209,12 @@ class Command(BaseCommand):
                                      if updateR:
                                          g.rmpr = getrmp(g.cinst,count)
                                          count = count +1
-                                     
-
+                                         
+                                if y == 36 and moveA == True:
+                                     g.d2day = pq(c).text()
+                                if y == 37 and moveA == True:
+                                     g.d2time = pq(c).text()
+                                if y == 38 and moveA == True:
+                                     g.d2build = pq(c).text()
+                                if y == 39 and moveA == True:
+                                     g.d2room = pq(c).text()
