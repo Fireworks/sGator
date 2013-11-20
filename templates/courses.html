@@ -1,5 +1,12 @@
 {%extends "base.html"%}
 {%block content%}
+    <script type="text/javascript" language="javascript">
+        openPage = function(name) {
+        var url = "http://www.registrar.ufl.edu/cdesc?crs="+name;
+        var win=window.open(url, '_blank');
+        win.focus();
+        }
+    </script>
     <div class="row-fluid">
         <div class="thumbnail span17 box">
             <h2>Courses Offered</h2>
@@ -25,16 +32,10 @@
                     <th class="col-hide">Disc. Location</th>  
                     <th class="col-hidden">Disc. Day (2)</th>
                     <th class="col-hidden">Disc. Period (2)</th>
-                    <th class="col-hidden">Disc. Location (2)</th>   
+                    <th class="col-hidden">Disc. Location (2)</th>
+                    <th class="col-hide">RateMyProf</th 
                 </tr>
                 {% for result in results %}
-                    <script type="text/javascript" language="javascript">
-                        openPage = function(name) {
-                        var url = "http://www.registrar.ufl.edu/cdesc?crs="+name;
-                        var win=window.open(url, '_blank');
-                        win.focus();
-                        }
-                    </script>
                   	<tr>
                   		<td class="plus"> 
                   			<a class="course-add" course-id="{{ result.id }}">+</a>
@@ -62,6 +63,7 @@
                         <td></td>
                         <td></td>
                         {%endif %}
+                        <td>{{result.rmpr}}</td>
 					</tr>
               {% endfor %}
             </table>
