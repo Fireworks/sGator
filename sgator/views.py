@@ -11,9 +11,12 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_exempt   
 from pyquery import PyQuery
+from __future__ import division
 import string
 import json
 import algorithm
+import itertools
+import random
 
 
 def insert_space(string, integer):
@@ -69,6 +72,7 @@ def generateSchedule(request):
             courseO = list() # list of courses based on given ID for courses to be generated 
             for i in courses:
                 courseO.append(Course.objects.get(id__exact = i))
+
             
             return render_to_response('schedule.html', {"courses": courseO,"results": templist,}, context_instance=context)
         
@@ -126,7 +130,15 @@ def search(request):
         return render_to_response('nrf.html', context_instance=context)   
     return render_to_response('courses.html', {"results": resultsF,"size": size}, context_instance=context)
 
-
+def input_subset(inputs):
+    # Assuming that inputs contains a multi-dimensional list of the user's
+    # requested courses and each dimension contains only courses of one class.
+    outputs = []
+    # for each dimension of inputs, make a random sublist of size ceil(len(sublist)/2)
+    for sublist in inputs:
+        subset = random.sample(sublist,int(math.ceil(len(sublist)/2)))
+        outputs.append(subset)
+    return outputs
 
 
 @csrf_exempt 
