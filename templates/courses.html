@@ -22,7 +22,12 @@
                     <th class="col-hide">Lecture Location</th>
                     <th class="col-hide">Disc. Day</th>
                     <th class="col-hide">Disc. Period</th>
-                    <th class="col-hide">Disc. Location</th>    
+                    <th class="col-hide">Disc. Location</th>  
+                    
+                    <th class="col-hide">Disc. Day (2)</th>
+                    <th class="col-hide">Disc. Period (2)</th>
+                    <th class="col-hide">Disc. Location (2)</th>           
+                    
                 </tr>
               {% for result in results %}
                   	<tr>
@@ -43,15 +48,22 @@
 						<td>{{ result.cinst }}</td>
 						<td>{{ result.lday }}</td>
 						<td>{{ result.ltime }}</td>
-						<td class="col-hide">{{ result.lbuild}} {{result.lroom}}</td>
+            			<td class="col-hide">{{ result.lbuild}} {{result.lroom}}</td>
 						<td class="col-hide">{{ result.dday}}</td>
 						<td class="col-hide">{{ result.dtime }}</td>
 						<td class="col-hide">{{ result.dbuild}} {{result.droom}}</td>
+
+                        {%if result.d2day %}
+                        <td>{{ result.d2day }}</td>           
+                        <td>{{ result.d2time }}</td>
+                        <td>{{ result.d2build }}{{ result.d2room }}</td>
+                                  
+                        {%endif %}
 					</tr>
               {% endfor %}
             </table>
             {% else %}
-			 <p>To browse all courses leave the field blank and just press "Search."</p>
+			
        <p>You may enter a Course Number, Course Instructor Name, Section Number, or Course Prefix.</p>
 
              <form method="get" action="/search/">
