@@ -18,6 +18,30 @@ import algorithm
 import itertools
 import random
 
+def generateLinks(results):  #generate links for campus map view
+    tempstrings = list()
+    needed = ['name','lday','dday','ltime', 'dtime', 'lbuild', 'dbuild']
+    tempstring = ''
+    for course in results:
+        for field, val in course:
+            if field in needed:
+                if (len(val) > 0) :
+                    tempstring = tempstring + val +','
+                    
+        templist = tempstring.split(',')
+        print templist
+        x = len(templist) - 1
+        y = 0
+        while(x >=0):
+            tempstrings.insert(x,templist[y])
+            x = x-1
+            y = y+1
+            
+        tempstring = tempstring + ';'
+        
+    print ''.join(tempstrings)
+    
+    return '0'
 
 def insert_space(string, integer):
     return string[0:integer] + ' ' + string[integer:]
@@ -44,7 +68,7 @@ def generateSchedule(request):
                 if request.POST.get('numc'):
                     numc = int(request.POST.get('numc'))
                 else: numc = 4
-                print numc
+                #print numc
                 generated = True
                 #Make Call To algorithm here generate button was clicked
                 tcourses = algorithm.get_results(request.user.get_profile().courses)   #temporary courses chosen added to queue per user not to be lost after refresh
@@ -72,9 +96,14 @@ def generateSchedule(request):
             courseO = list() # list of courses based on given ID for courses to be generated 
             for i in courses:
                 courseO.append(Course.objects.get(id__exact = i))
-
-            
-            return render_to_response('schedule.html', {"courses": courseO,"results": templist,}, context_instance=context)
+            cmap = list()
+            '''
+            if len(templist) > 0:
+                for s in templist:
+                    cmap.append(generateLinks(s))
+                #print cmap
+                '''
+            return render_to_response('schedule.html', {"courses": courseO,"results": templist,"cmaps": cmap,}, context_instance=context)
         
     else:
         return render_to_response('nsi.html', context_instance=context)
@@ -127,7 +156,10 @@ def search(request):
                                           
     size = len(resultsF)    
     if size < 1:
-        return render_to_response('nrf.html', context_instance=context)   
+        return render_to_response('nrf.html', context_instance=context)
+
+    
+            
     return render_to_response('courses.html', {"results": resultsF,"size": size}, context_instance=context)
 
 def input_subset(inputs):
