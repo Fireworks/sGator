@@ -1,3 +1,4 @@
+from __future__ import division
 from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.http import Http404
@@ -9,14 +10,20 @@ from course.models import Course
 from django.template import Context, loader
 from django.template import RequestContext
 from django.shortcuts import render_to_response
+from django.contrib.sessions.backends.db import SessionStore
+import datetime
+from random import *
 from django.views.decorators.csrf import csrf_exempt   
 from pyquery import PyQuery
-from __future__ import division
 import string
 import json
 import algorithm
 import itertools
 import random
+
+
+def setCount(c,request):
+    request.session['tcount'] = c
 
 def generateLinks(results):  #generate links for campus map view
     tempstrings = list()
@@ -52,29 +59,70 @@ def home(request):
 @csrf_exempt  
 def generateSchedule(request):
     context = RequestContext(request)
+    genAgain = False
     if request.user.is_authenticated():
         if request.is_ajax():  #Justin's Toast
             courses = request.raw_post_data
             request.user.get_profile().courses.append(courses)
             return HttpResponse(courses)
         else:
+
+            if 'tcount' not in request.session:
+                    setCount(0,request)
+            if 'templ' not in request.session:
+                     request.session['templ'] = list()
+            if request.POST.get('more'):
+                if 'tcount' not in request.session:
+                    setCount(0,request)
+                else: 
+                    setCount(int(request.session['tcount'] + 1),request)
+                genAgain = True
+
             tcourses = list()
             templist = list()
             generated = False
             if request.POST.get('clear'):
                 del request.user.get_profile().cursc[0:len(request.user.get_profile().cursc)]  #CLEAR temporary list of schedules generated
                 del request.user.get_profile().courses[0:len(request.user.get_profile().courses)] #If generated, the temporary courses are removed from the table and the User object
-            if request.POST.get('Generate'):
+                request.session['tcount'] = 0
+            courses = request.user.get_profile().courses
+            courseO = list() # list of courses based on given ID for courses to be generated
+            names = list()
+            for i in courses:
+                courseO.append(Course.objects.get(id__exact = i))
+                if Course.objects.get(id__exact = i).name not in names:
+                    names.append(Course.objects.get(id__exact = i).name)
+                    
+            namesF = list()
+            for n in names:
+                tlist = list()
+                for c in courseO:
+                    if c.name == n:
+                        tlist.append(c)
+                namesF.append(tlist)
+            numFoundCourses = len(namesF)            
+            print "NAMES "+str(namesF) # all temp courses sorted by course name
+          
+            if request.POST.get('Generate') or genAgain:
                 if request.POST.get('numc'):
-                    numc = int(request.POST.get('numc'))
-                else: numc = 4
+                    try:
+                        numc = (request.POST.get('numc'))
+                    except: numc = 20
+                else: numc = 20
                 #print numc
                 generated = True
-                #Make Call To algorithm here generate button was clicked
-                tcourses = algorithm.get_results(request.user.get_profile().courses)   #temporary courses chosen added to queue per user not to be lost after refresh
+                #START READING COMMENTS HERE
+                tcourses = algorithm.get_results(request.user.get_profile().courses)   #temporary courses chosen added to queue per user not to be lost after refresh, IGNORE THIS
                 if len(tcourses) > 0:
-                    results = algorithm.generate_schedules(request.user.get_profile().courses,numc)
-                    #print results
+                    tlist = input_subset(namesF,request,numc)
+                    if numc > len(namesF):      #NUMC is number of courses put in by user, NOT number of sections
+                        numc = len(namesF)      #NAMESF is the list of lists-> each list containing n sections per course submitted by user
+                    #results = algorithm.generate_schedules(tlist,numc)  #ORIGINAL CALL TO ALGORITHM get rid of this, replace with call to input_subset
+                    results = list() # where you'll call input_subset
+
+                    
+                    #SET results (list) = to output from input_subset
+                    
                     for i in range(0,len(results)):
                         templist.insert(i,(results[i]))# for each schedule, get correct formatting for template tags, schedule1 ->templist(1) and so on....
                             #Need t oinsert formatdisplay() method for front end for posible new schedule list type
@@ -92,18 +140,17 @@ def generateSchedule(request):
                     if len(request.user.get_profile().cursc) > 0:
                         templist = request.user.get_profile().cursc[0]                   
             #print templist  
-            courses = request.user.get_profile().courses
-            courseO = list() # list of courses based on given ID for courses to be generated 
-            for i in courses:
-                courseO.append(Course.objects.get(id__exact = i))
             cmap = list()
             '''
             if len(templist) > 0:
                 for s in templist:
                     cmap.append(generateLinks(s))
                 #print cmap
-                '''
-            return render_to_response('schedule.html', {"courses": courseO,"results": templist,"cmaps": cmap,}, context_instance=context)
+               '''
+
+
+            print "TCOUNT"+str(request.session['tcount'])
+            return render_to_response('schedule.html', {"courses": courseO,"results": templist,"cmaps": cmap,"totalC":numFoundCourses,}, context_instance=context)
         
     else:
         return render_to_response('nsi.html', context_instance=context)
@@ -162,14 +209,19 @@ def search(request):
             
     return render_to_response('courses.html', {"results": resultsF,"size": size}, context_instance=context)
 
-def input_subset(inputs):
-    # Assuming that inputs contains a multi-dimensional list of the user's
-    # requested courses and each dimension contains only courses of one class.
+def input_subset(inputs, request,numc):
     outputs = []
-    # for each dimension of inputs, make a random sublist of size ceil(len(sublist)/2)
-    for sublist in inputs:
-        subset = random.sample(sublist,int(math.ceil(len(sublist)/2)))
-        outputs.append(subset)
+    counter = int(request.session['tcount']) # count  if you need it, it is incremented ONLY when user clicks 'Generate more schedules' button, cleared when user clicks clear button
+    templist = request.session['templ'] #Session templist to be changed in this method
+    #create all possible combinations from multidimensional list of sections passed through
+    #store each combination in templist
+    #When the user clicks generate, add one from the the templist into the algorithm to get results, if results <1, delete that combination from list
+    #while results < 4 (or whatever number gives fast loading times) keep calling algorithm with new combinations
+    #when results > 4, return them to method in views
+    
+    request.session['tcount'] = counter
+    request.session['templ'] = templist  #After work done on templist, save it back to session cookie
+    print outputs
     return outputs
 
 

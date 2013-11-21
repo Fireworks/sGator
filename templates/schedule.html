@@ -17,7 +17,9 @@
 	</table>
 	<FORM METHOD="POST" ACTION="/schedule/">
 	<br/>
-	Number of Courses:
+	
+	<p> Total Number of Courses To Be Scheduled: {{totalC}}</p>
+	Number of Courses Wanted in Schedule:
 	<input TYPE="text" id="num-courses" type="number" name="numc" size="5"/>
 	<br/><br/>
 	<INPUT TYPE="submit" VALUE="Generate" class="btn btn-warning" name="Generate">
@@ -206,7 +208,7 @@
 
 	<p>DEBUG TABLE</p>
 
-		
+	{% if results %}	
 	{% for result in results %}
 	<p><b> NEW SCHEDULE #{{forloop.counter}}</b></p>
 	{% for course in result %}  
@@ -237,6 +239,11 @@
 	
 	{% endfor %}
 	{% endfor %}
+	<FORM METHOD="POST" ACTION="/schedule/">
+	<p></p>
+	<INPUT TYPE="submit" VALUE="Generate More Schedules" class="btn btn-warning" name="more">
+	</FORM>
+	 {%endif %}
 <script type="text/javascript" language="javascript">
              openPage = function(name) {
             var url = "http://campusmap.ufl.edu/?sched="+name;

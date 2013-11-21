@@ -79,22 +79,25 @@ def overlaps(class1, class2):
     return any((t==t2 and not(t==('B', 0) or t2==('B', 0))) for t in class1[1] for t2 in class2[1])
 
 def generate_schedules(Results,numc):
-    if not numc:
-        numcF = 4
-    else: numcF = numc
-    finalL = list()
+    #NOW passing through only ONE list of combinations, a 1D list of course IDs
+    blank = list()
     list3 = list()
-    IDcombo = itertools.combinations(Results,numc) # number of combinations will depend on how many courses people want
+    '''
+    IDcombo = itertools.combinations(Results,numc) # number of combinations will depend on how many courses people want //OLD DONT TOUCH
+    
+    finalL = list()
     for i in IDcombo:
             finalL.append(i)
-    for l in finalL:
-        list2 = list()
-        for v in l:
-            list2.append(findID(v))  #findID will be changed to return values from database based on ID of course, ALSO will implement a method to get all sections of a course
-            #print list2
-        if  not checkDup(list2): #remove duplicate names from iterations generated-> not possible to have more than one of same class
+    '''
+    for v in Results:
+        list2.append(findID(v))  #findID will be changed to return values from database based on ID of course, 
+
+        if  not checkDup(list2): #remove duplicate names from iterations passed ->not possible to have more than one of same class
             list3.append(list2)
-    return checkConflict(list3) #contains list of all combinations (lists) of courses without duplicate names
+    if len(list3) > 0:
+        return checkConflict(list3) #contains combination passed from Jonathan's input_subset IF there are no duplicates
+    else: return blank
+    #IF there are duplicates in the combinations results will return a blank list length 0 
     
 def findID(i): #will query database to find and return given courses, in this case source is just a list passed from the beginning
     return Course.objects.get(id__iexact = i)
