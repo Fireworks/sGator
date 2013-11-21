@@ -14,6 +14,7 @@ from pyquery import PyQuery
 import string
 import json
 import algorithm
+import models
 
 def generateLinks(results):  #generate links for campus map view
     tempstrings = list()
@@ -170,9 +171,46 @@ def pasth(request):
         data = request.POST.get('test')
         results = list()
         pq = PyQuery(data)
-        for c in pq('td'):
+        coursesFound = 0;
+		#tempSchedule = Schedule()
+        for c in pq('tr'):
             results.append(pq(c).text())
-            #to be parsed and added to Schedule Model of User Profile Model when created
+	
+			#find out if this is class data
+            query = "COURSE SECT GRADE CREDIT CREDIT EARNED CREDIT FOR GPA COURSE TITLE"
+			
+			
+            if pq(c).text() == query: #go through the page to find when courses first appear 
+				coursesFound = 1
+				#print "found courses" #debug log
+				
+            else: #if it is not a header then do this
+				if coursesFound == 1: #if it is not a header AND courses have already been found, parse them
+					coursedata = pq(c)
+					pastClass = Course() #temp class object 
+					for d in coursedata('td'): # break the tr down into it's td values
+						#print coursedata(d).text() #debugging logs 
+						
+						length = len(coursedata(d).text()) #get the length of the data so we know what field it is
+						
+						if length == 8:
+							pastClass.name = coursedata(d).text()
+						else: 
+							if length == 4:
+								 pastClass.section = coursedata(d).text() #0000 for transfer classes
+							else:
+								if length == 1 or length == 2:
+									pastClass.finalgrade = coursedata(d).text() 
+								else:
+									if length == 3:
+										pastClass.cedits = coursedata(d).text() #note: there can be multiple credit fields (credits earned, for gpa, credits), we are grabbing the very last one 
+									else:
+										pastClass.cname = coursedata(d).text()
+					#tempSchedule.add(pastClass)
+						
+				
+		#go to user profile and add tempschedule	
+			
         return render_to_response('pasth.html', {"results": results,}, context_instance=context)
 
     else:
