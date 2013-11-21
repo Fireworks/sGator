@@ -3,7 +3,7 @@ from django.db.models.signals import class_prepared
 from django.contrib.auth.models import User
 from django.db import models
 from django_facebook.models import FacebookModel
-#how to import schedule from sgator/models
+from sgator.models import Schedule
 
 class Course(models.Model):
     name = models.CharField(max_length=200)
@@ -44,7 +44,7 @@ class Course(models.Model):
 
 
 class UserProfile(FacebookModel):
-    #pastHistory = Schedule()#Schedule Model 
+    pastHistory = Schedule()#Schedule Model 
     cursc = list()
     courses = list()
     user = models.ForeignKey(User, unique=True)

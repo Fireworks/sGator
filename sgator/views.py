@@ -11,6 +11,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_exempt   
 from pyquery import PyQuery
+from sgator.models import Schedule
 import string
 import json
 import algorithm
@@ -124,7 +125,7 @@ def search(request):
     iquery = request.GET.get('q')
     query = iquery.strip()
     criteria = request.GET.get('DEPT')
-    #print query + str(len(query))
+    print query + str(len(query))
     if criteria != "":
         resultsF = Course.objects.filter(dept__exact = criteria)
         
@@ -172,7 +173,7 @@ def pasth(request):
         results = list()
         pq = PyQuery(data)
         coursesFound = 0;
-		#tempSchedule = Schedule()
+        tempSchedule = Schedule()
         for c in pq('tr'):
             results.append(pq(c).text())
 	
@@ -206,10 +207,10 @@ def pasth(request):
 										pastClass.cedits = coursedata(d).text() #note: there can be multiple credit fields (credits earned, for gpa, credits), we are grabbing the very last one 
 									else:
 										pastClass.cname = coursedata(d).text()
-					#tempSchedule.add(pastClass)
+					tempSchedule.add(pastClass)
 						
-				
-		#go to user profile and add tempschedule	
+        user_profile = request.user.get_profile()				
+        user_profile.pastHistory = tempSchedule; #go to user profile and add tempschedule	
 			
         return render_to_response('pasth.html', {"results": results,}, context_instance=context)
 
