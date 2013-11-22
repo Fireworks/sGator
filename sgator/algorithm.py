@@ -51,7 +51,7 @@ def gettimes(ltime):
         return time_ints
     
 def formatDisplay(results):
-    cperiods = [[] for i in range(14)]
+    cperiods = [{} for i in range(14)]
     #pass through one schedule at a time from views
     
     for c in results.sections:
@@ -60,17 +60,11 @@ def formatDisplay(results):
         dtime = gettimes(c.dtime)
             #print dtime #get discussion times of each course
         for t in ltime: #add to spot based on lecture time
-            try:
-                cperiods[t-1].append(c) # for every period in that course, add it to that period list'
-                    #print "ADDING L " + str(c) + " TO INDEX " + str(t)   
-            except:
-                cperiods[13].append(c) #edge cases excluded, added later in views
+            for day in c.lday.split():
+                cperiods[t-1][day] = c
         for d in dtime: #add to spot based on discussion time
-            try:
-                cperiods[d-1].append(c) 
-                    #print "ADDING D " + str(c) + " TO INDEX " + str(d)   
-            except:
-                cperiods[13].append(c)
+            for day in c.dday.split():
+                cperiods[d-1][day] = c
     return cperiods
 
                 

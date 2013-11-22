@@ -24,189 +24,34 @@
 	<INPUT TYPE="submit" VALUE="Clear Generated Schedule" class="btn btn-warning" name="clear">
 	</FORM>
 </div>
-<div class="thumbnail box span8">
-	<table id="schedule-table" class="table table-bordered">
-		<tr>
-			<th>Monday</th>
-			<th>Tuesday</th>
-			<th>Wednesday</th>
-			<th>Thursday</th>
-			<th>Friday</th>
-		</tr>
-		<tr>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-		</tr>
-		<tr>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-		</tr>
-		<tr>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-		</tr>
-		<tr>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-		</tr>
-		<tr>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-		</tr>
-		<tr>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-		</tr>
-		<tr>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-		</tr>
-		<tr>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-		</tr>
-		<tr>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-		</tr>
-		<tr>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-		</tr>
-		<tr>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-		</tr>
-		<tr>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-		</tr>
-		<tr>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-		</tr>
-		<tr>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-			</td>
-		</tr>
-	</table>
 
+	<div class="thumbnail box span8">
+	{% for result in results %}
+		<table id="schedule-table" class="table table-bordered">
+			<tr>
+				<th>Monday</th>
+				<th>Tuesday</th>
+				<th>Wednesday</th>
+				<th>Thursday</th>
+				<th>Friday</th>
+			</tr>
+			{% for period in result %}
+			<tr>
+				{% for day in 'MTWRF' %}
+					{% if period[day] %}
+					<td>
+						{{ period[day].name }}
+					</td>
+					{% endif %}
+				{% endfor %}
+			</tr>
+			{% endfor %}
+		</table>
+		{% endfor %}
+	</div>
 
 	<p>DEBUG TABLE</p>
 
-		
 	{% for result in results %}
 	<p><b> NEW SCHEDULE #{{forloop.counter}}</b></p>
 	{% for course in result %}  
@@ -233,8 +78,6 @@
 					</tr>
 	
 	</table>
-
-	
 	{% endfor %}
 	{% endfor %}
 <script type="text/javascript" language="javascript">
@@ -244,10 +87,9 @@
             win.focus();
             }
  </script>
-						
-{% for link in cmaps %}
+
+ {% for link in cmaps %}
 <p><a href ="javascript:openPage('{{link}}')">Campus Map for Course Schedule#{{forloop.counter}}</a></p>
 {% endfor %}
-</div>
 </div>
 {%endblock%}
