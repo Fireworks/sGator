@@ -141,6 +141,7 @@ INSTALLED_APPS = (
     
     # Registration
     'registration',
+    'sgator'
 )
 
 ACCOUNT_ACTIVATION_DAYS = 7 # for registration - number of days

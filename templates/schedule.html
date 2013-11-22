@@ -1,4 +1,5 @@
 {%extends "base.html"%}
+{%load course_filter%}
 {%block content%}
 <div class="row-fluid">
 <div id="schedule-options" class="thumbnail box span4">
@@ -35,17 +36,35 @@
 				<th>Thursday</th>
 				<th>Friday</th>
 			</tr>
-			{% for period in result %}
-			<tr>
-				{% for day in 'MTWRF' %}
-					{% if period[day] %}
-					<td>
-						{{ period[day].name }}
-					</td>
-					{% endif %}
+			{% with schedule=result|format_display %}
+				{% for period in schedule.0 %}
+				<tr>
+					{% for day in 'MTWRF' %}
+						{% with course=period|get_item:day %}
+							<td>							
+							{% if course %}
+								{% if course.1 %}
+								Disc:
+								{% endif %}
+								{{ course.0.name }}
+							{% endif %}
+							</td>
+						{% endwith %}
+					{% endfor %}
+				</tr>
 				{% endfor %}
-			</tr>
-			{% endfor %}
+				{% if schedule.1 %}
+				<tr>
+					<td colspan="5">
+						<p>TO ARRANGE:
+							{% for course in schedule.1 %}
+								{{course.name}}
+							{% endfor %}
+						</p>
+					</td>
+				</tr>
+				{%endif%}
+			{% endwith %}
 		</table>
 		{% endfor %}
 	</div>
@@ -65,7 +84,7 @@
 			<!--		{% if course.cedits == '3' %}   Something like this line here will help you see discussion vs lecture times in a given period. -->
 						<td>{{ course.cedits }}</td>
 				<!--		{%endif%}  -->
-						<td>{{ course.lday }}</td>
+						<td> {{ course.lday }}</td>
 						<td>{{ course.ltime }}</td>
 						
 						<td >{{ course.dday}}</td>
