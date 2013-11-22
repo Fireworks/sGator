@@ -68,38 +68,7 @@
 		</table>
 		{% endfor %}
 	</div>
-
-	<p>DEBUG TABLE</p>
-
-	{% for result in results %}
-	<p><b> NEW SCHEDULE #{{forloop.counter}}</b></p>
-	{% for course in result %}  
-   
-    <table style = "border:1px solid black;" id="debuglist" class="table-striped" cellpadding="5px">
-                  	<tr>
-                  	  <!--Use this forloop variable to keep track of what period you're in-->
-						<td>{{ course.name }}</td>
-						<td>{{ course.section }}</td>
-						<td >{{ course.cname }}</td>
-			<!--		{% if course.cedits == '3' %}   Something like this line here will help you see discussion vs lecture times in a given period. -->
-						<td>{{ course.cedits }}</td>
-				<!--		{%endif%}  -->
-						<td> {{ course.lday }}</td>
-						<td>{{ course.ltime }}</td>
-						
-						<td >{{ course.dday}}</td>
-						<td >{{ course.dtime }}</td>
-					
-						{%if course.d2day %}
-                        <td>{{ course.d2day }}</td>           
-                        <td>{{ course.d2time }}</td>        
-                        {%endif %}
-					</tr>
-	
-	</table>
-	{% endfor %}
-	{% endfor %}
-<script type="text/javascript" language="javascript">
+<!--<script type="text/javascript" language="javascript">
              openPage = function(name) {
             var url = "http://campusmap.ufl.edu/?sched="+name;
             var win=window.open(url, '_blank');
@@ -110,5 +79,5 @@
  {% for link in cmaps %}
 <p><a href ="javascript:openPage('{{link}}')">Campus Map for Course Schedule#{{forloop.counter}}</a></p>
 {% endfor %}
-</div>
+</div>-->
 {%endblock%}
