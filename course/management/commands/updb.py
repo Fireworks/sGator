@@ -45,7 +45,8 @@ class LinksParser(HTMLParser.HTMLParser):
       self.isName = False
 
 def getrmp(profName,count):
-        
+        firstName = ' '
+        lastName = ' '
         iquery = profName
         query = iquery.split(',')
         
