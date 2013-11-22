@@ -114,14 +114,10 @@ def generateSchedule(request):
                 #START READING COMMENTS HERE
                 tcourses = algorithm.get_results(request.user.get_profile().courses)   #temporary courses chosen added to queue per user not to be lost after refresh, IGNORE THIS
                 if len(tcourses) > 0:
-                    tlist = input_subset(namesF,request,numc)
-                    if numc > len(namesF):      #NUMC is number of courses put in by user, NOT number of sections
-                        numc = len(namesF)      #NAMESF is the list of lists-> each list containing n sections per course submitted by user
+                    if numc > len(namesF): # Where numc is number of courses put in by user
+                        numc = len(namesF) # namesF is the list of lists
                     #results = algorithm.generate_schedules(tlist,numc)  #ORIGINAL CALL TO ALGORITHM get rid of this, replace with call to input_subset
-                    results = list() # where you'll call input_subset
-
-                    
-                    #SET results (list) = to output from input_subset
+                    results = control_algo(namesF,request,numc)
                     
                     for i in range(0,len(results)):
                         templist.insert(i,(results[i]))# for each schedule, get correct formatting for template tags, schedule1 ->templist(1) and so on....
@@ -146,7 +142,7 @@ def generateSchedule(request):
                 for s in templist:
                     cmap.append(generateLinks(s))
                 #print cmap
-               '''
+            '''
 
 
             print "TCOUNT"+str(request.session['tcount'])
@@ -209,18 +205,19 @@ def search(request):
             
     return render_to_response('courses.html', {"results": resultsF,"size": size}, context_instance=context)
 
-def input_subset(inputs, request,numc):
-    outputs = []
-    counter = int(request.session['tcount']) # count  if you need it, it is incremented ONLY when user clicks 'Generate more schedules' button, cleared when user clicks clear button
+def control_algo(inputs, request, numc):
     templist = request.session['templ'] #Session templist to be changed in this method
-    #create all possible combinations from multidimensional list of sections passed through
-    #store each combination in templist
-    #When the user clicks generate, add one from the the templist into the algorithm to get results, if results <1, delete that combination from list
-    #while results < 4 (or whatever number gives fast loading times) keep calling algorithm with new combinations
-    #when results > 4, return them to method in views
-    
-    request.session['tcount'] = counter
-    request.session['templ'] = templist  #After work done on templist, save it back to session cookie
+    outputs = templist[:] # Get the leftover elements from last time
+    course_combo = itertools.cycle(itertools.product(*inputs))
+    while len(outputs) < 4:
+        # actually generate results for this combo 
+        list_IDs = list(course.id for course in next(course_combo))
+        results = algorithm.generate_schedules(list_IDs,numc)
+        outputs.extend(results)
+    # At this point, len(outputs) must be 4 or greater
+    templist = outputs[5:len(outputs)] # save the leftover elements
+    outputs = outputs[0:5]
+    request.session['templ'] = templist  # Save templist back to session cookie
     print outputs
     return outputs
 

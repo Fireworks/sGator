@@ -90,6 +90,7 @@ def generate_schedules(Results,numc):
             finalL.append(i)
     '''
     for v in Results:
+        list2 = []
         list2.append(findID(v))  #findID will be changed to return values from database based on ID of course, 
 
         if  not checkDup(list2): #remove duplicate names from iterations passed ->not possible to have more than one of same class
