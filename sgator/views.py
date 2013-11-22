@@ -7,12 +7,13 @@ from django.shortcuts import render,redirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from course.models import Course
+from sgator.models import Schedule
 from django.template import Context, loader
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.sessions.backends.db import SessionStore
 import datetime
-from random import *
+import random
 from django.views.decorators.csrf import csrf_exempt   
 from pyquery import PyQuery
 import string
@@ -72,11 +73,7 @@ def generateSchedule(request):
             if 'templ' not in request.session:
                      request.session['templ'] = list()
             if request.POST.get('more'):
-                if 'tcount' not in request.session:
-                    setCount(0,request)
-                else: 
-                    setCount(int(request.session['tcount'] + 1),request)
-                genAgain = True
+                    genAgain = True
 
             tcourses = list()
             templist = list()
@@ -101,13 +98,15 @@ def generateSchedule(request):
                         tlist.append(c)
                 namesF.append(tlist)
             numFoundCourses = len(namesF)            
-            print "NAMES "+str(namesF) # all temp courses sorted by course name
+            #print "NAMES "+str(namesF) # all temp courses sorted by course name
           
             if request.POST.get('Generate') or genAgain:
                 if request.POST.get('numc'):
                     try:
-                        numc = (request.POST.get('numc'))
-                    except: numc = 20
+                        numc = int(request.POST.get('numc'))
+                    except: 
+                            print "EXCEPTION"
+                            numc = 20
                 else: numc = 20
                 #print numc
                 generated = True
@@ -117,7 +116,11 @@ def generateSchedule(request):
                     if numc > len(namesF): # Where numc is number of courses put in by user
                         numc = len(namesF) # namesF is the list of lists
                     #results = algorithm.generate_schedules(tlist,numc)  #ORIGINAL CALL TO ALGORITHM get rid of this, replace with call to input_subset
-                    results = control_algo(namesF,request,numc)
+
+                    #print courses
+                    
+                    
+                    results = control_algo(namesF,request,numc, courses)
                     
                     for i in range(0,len(results)):
                         templist.insert(i,(results[i]))# for each schedule, get correct formatting for template tags, schedule1 ->templist(1) and so on....
@@ -168,7 +171,7 @@ def search(request):
     iquery = request.GET.get('q')
     query = iquery.strip()
     criteria = request.GET.get('DEPT')
-    #print query + str(len(query))
+    print query + str(len(query))
     if criteria != "":
         resultsF = Course.objects.filter(dept__exact = criteria)
         
@@ -205,21 +208,54 @@ def search(request):
             
     return render_to_response('courses.html', {"results": resultsF,"size": size}, context_instance=context)
 
-def control_algo(inputs, request, numc):
-    templist = request.session['templ'] #Session templist to be changed in this method
-    outputs = templist[:] # Get the leftover elements from last time
-    course_combo = itertools.cycle(itertools.product(*inputs))
-    while len(outputs) < 4:
-        # actually generate results for this combo 
-        list_IDs = list(course.id for course in next(course_combo))
-        results = algorithm.generate_schedules(list_IDs,numc)
-        outputs.extend(results)
-    # At this point, len(outputs) must be 4 or greater
-    templist = outputs[5:len(outputs)] # save the leftover elements
-    outputs = outputs[0:5]
-    request.session['templ'] = templist  # Save templist back to session cookie
-    print outputs
-    return outputs
+def control_algo(inputs, request, numc, courseIDs):
+    print "NUMC" + str(numc)
+    countC = request.session['tcount']
+    if countC != numc: #user added more courses
+        print "A NEW COURSE OR MORE HAS BEEN ADDED" #generate new combinations if User adds new courses
+        request.session['templ2'] = list()
+        templist = list()
+        for v in itertools.combinations(courseIDs,numc): # ALL combinations of IDs
+            templist.append(list(v)) #current list of IDs
+            
+    else: templist = request.session['templ'] #Keep the old left over combinations not yet processed
+    
+    #templist2 = request.session['templ2'] 
+    results = list() 
+    #course_combo = itertools.cycle(itertools.product(*inputs))
+    #tbr = list()
+    oSize = len(templist)
+    while len(results) < 1:
+        # actually generate results for this combo
+        if len(templist) == 0: # we have gone through all the list of combinations
+            print str(len(templist2))
+            break     
+
+        if len(templist) > 0: 
+            tempList = templist.pop()
+            results = algorithm.generate_schedules(tempList,numc)
+            #print "LENGTH OF RESULTS " + str(len(results))
+        '''    
+            if len(results) > 1:  #IGNORE THIS STUFF
+                print 'HERE'
+                templist2.append(tempList) #NOT working
+
+        
+        if len(results) < 1 :
+            tbr.append(templist[i])
+            print "SIZE OF REMOVE LIST " + str(len(tbr))
+        if oSize == len(tbr):
+            break
+        
+    for c in tbr:
+        templist.remove(c)
+        '''
+    print templist2
+    request.session['templ'] = templist 
+    #request.session['templ2']  = templist2# Save templist back to session cookie
+    request.session['tcount'] = numc
+    print results
+    return results
 
 
 @csrf_exempt 
@@ -236,3 +272,9 @@ def pasth(request):
 
     else:
         return render_to_response('nsi.html', context_instance=context)
+
+
+def scrambled(orig):
+    dest = orig[:]
+    random.shuffle(dest)
+    return dest

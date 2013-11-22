@@ -40,6 +40,10 @@ form{
         width: 100%;
 }
 
+.col-hidden, .show-name-row {
+    display: none !important;
+}
+
 @media (max-width: 980px) {
     .col-hide {
         display: none !important;

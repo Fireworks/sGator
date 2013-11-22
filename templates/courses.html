@@ -1,5 +1,12 @@
 {%extends "base.html"%}
 {%block content%}
+    <script type="text/javascript" language="javascript">
+        openPage = function(name) {
+        var url = "http://www.registrar.ufl.edu/cdesc?crs="+name;
+        var win=window.open(url, '_blank');
+        win.focus();
+        }
+    </script>
     <div class="row-fluid">
         <div class="thumbnail span17 box">
             <h2>Courses Offered</h2>
@@ -11,7 +18,7 @@
                  <form action = "/courses/"><input Type="submit"  class="btn" value="Back To Search"></form>
 
                 <tr>
-                	<th>Add</th>
+                    <th>Add</th>
                     <th>Course Number</th>
                     <th>Section</th>
                     <th class="col-hide">Course Name</th>
@@ -23,47 +30,45 @@
                     <th class="col-hide">Disc. Day</th>
                     <th class="col-hide">Disc. Period</th>
                     <th class="col-hide">Disc. Location</th>  
-                    
-                    <th class="col-hide">Disc. Day (2)</th>
-                    <th class="col-hide">Disc. Period (2)</th>
-                    <th class="col-hide">Disc. Location (2)</th>           
-                    
+                    <th class="col-hidden">Disc. Day (2)</th>
+                    <th class="col-hidden">Disc. Period (2)</th>
+                    <th class="col-hidden">Disc. Location (2)</th>
+                    <th class="col-hide">RateMyProf</th 
                 </tr>
-              {% for result in results %}
-                  	<tr>
-                  		<td class="plus">
-                  			<a class="course-add" course-id="{{ result.id }}">+</a>
-                  		</td>
-            <script type="text/javascript" language="javascript">
-            openPage = function(name) {
-            var url = "http://www.registrar.ufl.edu/cdesc?crs="+name;
-            var win=window.open(url, '_blank');
-            win.focus();
-            }
-            </script>
-						<td><a href ="javascript:openPage('{{result.name}}')">{{result.name}}</a></td>
-						<td>{{ result.section }}</td>
-						<td class="col-hide">{{ result.cname }}</td>
-						<td>{{ result.cedits }}</td>
-						<td>{{ result.cinst }}</td>
-						<td>{{ result.lday }}</td>
-						<td>{{ result.ltime }}</td>
-            			<td class="col-hide">{{ result.lbuild}} {{result.lroom}}</td>
-						<td class="col-hide">{{ result.dday}}</td>
-						<td class="col-hide">{{ result.dtime }}</td>
-						<td class="col-hide">{{ result.dbuild}} {{result.droom}}</td>
-
+                {% for result in results %}
+                    <tr>
+                        <td class="plus"> 
+                            <a class="course-add" course-id="{{ result.id }}">+</a>
+                        </td>
+                        <td><a href ="javascript:openPage('{{result.name}}')">{{result.name}}</a></td>
+                        <td>{{ result.section }}</td>
+                        <td class="col-hide">{{ result.cname }}</td>
+                        <td>{{ result.cedits }}</td>
+                        <td>{{ result.cinst }}</td>
+                        <td>{{ result.lday }}</td>
+                        <td>{{ result.ltime }}</td>
+                        <td class="col-hide">{{ result.lbuild}} {{result.lroom}}</td>
+                        <td class="col-hide">{{ result.dday}}</td>
+                        <td class="col-hide">{{ result.dtime }}</td>
+                        <td class="col-hide">{{ result.dbuild}} {{result.droom}}</td>
                         {%if result.d2day %}
-                        <td>{{ result.d2day }}</td>           
-                        <td>{{ result.d2time }}</td>
-                        <td>{{ result.d2build }}{{ result.d2room }}</td>
-                                  
+                        <td class="col-hidden">{{ result.d2day }}</td>           
+                        <td class="col-hidden">{{ result.d2time }}</td>
+                        <td class="col-hidden">{{ result.d2build }}{{ result.d2room }}</td>   
+                        <script type="text/javascript" language="javascript">
+                            $(".col-hidden").removeClass('col-hidden');
+                        </script>
+                        {% else %}
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         {%endif %}
-					</tr>
+                        <td>{{result.rmpr}}</td>
+                    </tr>
               {% endfor %}
             </table>
             {% else %}
-			
+            
        <p>You may enter a Course Number, Course Instructor Name, Section Number, or Course Prefix.</p>
 
              <form method="get" action="/search/">

@@ -82,6 +82,7 @@ def generate_schedules(Results,numc):
     #NOW passing through only ONE list of combinations, a 1D list of course IDs
     blank = list()
     list3 = list()
+    list4 = list()
     '''
     IDcombo = itertools.combinations(Results,numc) # number of combinations will depend on how many courses people want //OLD DONT TOUCH
     
@@ -89,14 +90,15 @@ def generate_schedules(Results,numc):
     for i in IDcombo:
             finalL.append(i)
     '''
-    for v in Results:
-        list2 = []
-        list2.append(findID(v))  #findID will be changed to return values from database based on ID of course, 
-
-        if  not checkDup(list2): #remove duplicate names from iterations passed ->not possible to have more than one of same class
-            list3.append(list2)
-    if len(list3) > 0:
-        return checkConflict(list3) #contains combination passed from Jonathan's input_subset IF there are no duplicates
+    
+    for i in Results:
+        list3.append(findID(i))
+    print "TRYING COMBO" + str(list3)
+    if  not checkDup(list3):
+        list4.append(list3)
+        if len(list3) > 0:
+            return checkConflict(list4)
+        #contains combination passed from Jonathan's input_subset IF there are no duplicates
     else: return blank
     #IF there are duplicates in the combinations results will return a blank list length 0 
     
