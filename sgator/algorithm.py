@@ -1,6 +1,7 @@
 from course.models import Course as DB_Course
 from sgator.models import Schedule
 from course.models import Course
+from operator import attrgetter
 import itertools
 
 def gettimes(ltime):
@@ -202,5 +203,17 @@ def checkDup(listt):
         x = x-1
         
     return conflict
+
+#Rate my Professor stuff
+def sortByRMP(Results):
+    #Uses built-in Python sort based on average Rate My Prof. scores
+    Results.sort(key=attrgetter('averageRMP'), reverse=True)
+
+def minRMP(Results,min):
+    #removes schedules that have a class with a RMP score less than the specified value
+    for i in Results:
+        for j in sections:
+            if Results[i].sections[j].rmpr < min:
+                Results.remove(Results[i].sections[j])
 
 
