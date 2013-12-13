@@ -22,9 +22,48 @@
 	<p>Number of Courses Wanted in Schedule:
         <input TYPE="text" id="num-courses" type="number" name="numc" size="5"/>
         <br/><br/>
+        <p>Days to schedule classes</p>
+		<input type="checkbox" name="days" value="M" checked/><label>Monday</label>
+		<input type="checkbox" name="days" value="T" checked/><label>Tuesday</label>
+		<input type="checkbox" name="days" value="W" checked/><label>Wednesday</label>
+		<input type="checkbox" name="days" value="R" checked/><label>Thursday</label>
+		<input type="checkbox" name="days" value="F" checked/><label>Friday</label>
+		<select name="no-before">
+			<option value="1">No classes before</option>
+			<option value="2">Pd 2</option>
+			<option value="3">Pd 3</option>
+			<option value="4">Pd 4</option>
+			<option value="5">Pd 5</option>
+			<option value="6">Pd 6</option>
+			<option value="7">Pd 7</option>
+			<option value="8">Pd 8</option>
+			<option value="9">Pd 9</option>
+			<option value="10">Pd 10</option>
+			<option value="11">Pd 11</option>
+			<option value="12">Pd E1</option>
+			<option value="13">Pd E2</option>
+			<option value="14">Pd E3</option>
+		</select>
+		<select name="no-after">
+			<option value="14">No classes after</option>
+			<option value="1">Pd 1</option>
+			<option value="2">Pd 2</option>
+			<option value="3">Pd 3</option>
+			<option value="4">Pd 4</option>
+			<option value="5">Pd 5</option>
+			<option value="6">Pd 6</option>
+			<option value="7">Pd 7</option>
+			<option value="8">Pd 8</option>
+			<option value="9">Pd 9</option>
+			<option value="10">Pd 10</option>
+			<option value="11">Pd 11</option>
+			<option value="12">Pd E1</option>
+			<option value="13">Pd E2</option>
+		</select>
         <INPUT TYPE="submit" VALUE="Generate" class="btn btn-warning" name="Generate">
         <INPUT TYPE="submit" VALUE="Clear Generated Schedule" class="btn btn-warning" name="clear"></p>
 	</FORM>
+	
 </div>
 
 	<div class="thumbnail box span8">
@@ -67,6 +106,8 @@
 				{%endif%}
 			{% endwith %}
 		</table>
+		{%empty%}
+		No results. Try selecting fewer courses.
 		{% endfor %}
 	</div>
 <!--<script type="text/javascript" language="javascript">

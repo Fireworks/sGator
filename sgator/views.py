@@ -12,6 +12,7 @@ from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_exempt   
 from pyquery import PyQuery
 from sgator.models import Schedule
+from sgator.algorithm import *
 import string
 import json
 import algorithm
@@ -107,8 +108,34 @@ def generateSchedule(request):
                 else:
                     if len(request.user.get_profile().cursc) > 0:
                         templist = request.user.get_profile().cursc[0]                   
-            #print templist  
-            return render_to_response('schedule.html', {"courses": courseO,"results": templist,"totalC":numFoundCourses,}, context_instance=context)
+            actual = []
+            if request.POST:
+                print request.POST
+                for result in templist:
+                    good = True;
+                    for cls in result:
+                        print vars(cls)
+                        if len(cls.lday.split()) > len([i for i in cls.lday.split() if i in dict(request.POST)['days']]):
+                            good = False
+                            break
+                        if len(cls.dday.split()) > len([i for i in cls.dday.split() if i in dict(request.POST)['days']]):
+                            good = False
+                            break
+                        for time in gettimes(cls.ltime):
+                            print time
+                            if time < int(request.POST['no-before']):
+                                good = False
+                            elif time > int(request.POST['no-after']):
+                                good = False
+                        for time in gettimes(cls.dtime):
+                            print time
+                            if time < int(request.POST['no-before']):
+                                good = False
+                            elif time > int(request.POST['no-after']):
+                                good = False
+                    if good:
+                        actual.append(result)
+            return render_to_response('schedule.html', {"courses": courseO,"results": actual,"totalC":numFoundCourses,}, context_instance=context)
         
     else:
         return render_to_response('nsi.html', context_instance=context)
