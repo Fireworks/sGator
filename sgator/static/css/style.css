@@ -13,6 +13,10 @@ form{
         margin: 0;
 }
 
+.option-box {
+    width: 40px;
+}
+
 .main {
     padding-bottom: 40px;
 }

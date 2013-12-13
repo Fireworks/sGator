@@ -29,11 +29,11 @@
                     <th class="col-hide">Lecture Location</th>
                     <th class="col-hide">Disc. Day</th>
                     <th class="col-hide">Disc. Period</th>
-                    <th class="col-hide">Disc. Location</th>  
+                    <th class="col-hide">Disc. Location</th>
+                    <th class="col-hide">RateMyProf</th>  
                     <th class="col-hidden">Disc. Day (2)</th>
                     <th class="col-hidden">Disc. Period (2)</th>
                     <th class="col-hidden">Disc. Location (2)</th>
-                    <th class="col-hide">RateMyProf</th>
                 </tr>
                 {% for result in results %}
                   	<tr>
@@ -55,7 +55,7 @@
                         {%if result.d2day %}
                         <td class="col-hidden">{{ result.d2day }}</td>           
                         <td class="col-hidden">{{ result.d2time }}</td>
-                        <td class="col-hidden">{{ result.d2build }}{{ result.d2room }}</td>   
+                        <td class="col-hidden">{{ result.d2build }}{{ result.d2room }}</td>    
                         <script type="text/javascript" language="javascript">
                             $(".col-hidden").removeClass('col-hidden');
                         </script>
