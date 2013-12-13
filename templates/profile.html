@@ -1,7 +1,8 @@
 {%extends "base.html"%}
+{%load course_filter%}
 {%block content%}
 <head>
-<script>
+<!--<script>
 //Toggle button text
 $(document).ready(function(){
     $("#courseSchedule").hide();
@@ -22,495 +23,66 @@ $(document).ready(function(){
   });
 });
 
-</script>
+</script>-->
 </head>
-    <div class="row-fluid">
-        <div class="thumbnail span4 box">
-            <h2>Options</h2><br>
+<div class="row-fluid">
+    <div class="thumbnail span4 box">
+        <h2>Options</h2><br>
 
-            <h4>Toggle Schedule View:</h4>
-            <button id="weeklyPlannerSchedule" class="scheduleButtons" >View Weekly Planner</button>
-            <button id="courseSchedule" class="scheduleButtons">View Course Schedule</button><br><br>
+        <h4>Remove Saved Schedule:</h4>
+        <button id="courseSchedule" class="scheduleButtons">Remove</button><br><br>
 
-            <h4>Past Schedules:</h4>
-            <p><a href="/pasth"><button id= "pastSchedules" class="scheduleButtons">Obtain Past Course History</button></a> </p>
-         </div>
-      
-        <div class="thumbnail span8 box">
-            <font size="10">{{ user.username }}'s User Profile</font><br> 
-            <h3>Current Schedule</h3>
-            
-
-            <div id="weeklyPlannerDiv" class="currentSchedule">
-              <table id="weeklyPlanner-table" class="table table-bordered" style= "display:">
-                  <tr>
-                    <th>Period</th>
-                    <th></th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                  </tr>
-                  <tr>
-                    <td>1
-                    </td>
-                    <td>7:25
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2
-                    </td>
-                    <td>8:30
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>3
-                    </td>
-                    <td>9:35
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>4
-                    </td>
-                    <td>10:40
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>5
-                    </td>
-                    <td>11:45
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>6
-                    </td>
-                    <td>12:50
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>7
-                    </td>
-                    <td>1:55
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>8
-                    </td>
-                    <td>3:00
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>9
-                    </td>
-                    <td>4:05
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>10
-                    </td>
-                    <td>5:10
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>11
-                    </td>
-                    <td>6:15
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>E1
-                    </td>
-                    <td>7:20
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>E2
-                    </td>
-                    <td>8:20
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>E3
-                    </td>
-                    <td>9:20
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                  </tr>
-              </table>
-
-
-			 </div>
-
-            <div id="courseScheduleDiv" class="currentSchedule">
-              <table id="courseSchedule-table" class="table table-bordered" style= "display:">
-                  <tr>
-                    <th>Section</th>
-                    <th>Type</th>
-                    <th>Course</th>
-                    <th>Credits</th>
-                    <th>Days</th>
-                    <th>Periods</th>
-                    <th>Bldg</th>
-                    <th>Room</th>
-                  </tr>
-                  <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-              </table>
-            </div>
-
-            <!-- <h3>Past Schedules</h3>
-            <p><a href="/pasth">Obtain Past Course History</a> </p> -->
-            
-
-         </div>
-       
+        <h4>Obtain Past Course History:</h4>
+        <p><a href="/pasth"><button id= "pastSchedules" class="scheduleButtons">View Tutorial</button></a> </p>
      </div>
+  
+    <div class="thumbnail span8 box">
+        <font size="10">{{ user.username }}'s User Profile</font><br> 
+        <h3>Current Schedule</h3>
+        
+    {% for result in Schedule %}
+        <table id="schedule-table" class="table table-bordered">
+            <tr>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+            </tr>
+            {% with schedule=result|format_display %}
+                {% for period in schedule.0 %}
+                <tr>
+                    {% for day in 'MTWRF' %}
+                        {% with course=period|get_item:day %}
+                            <td>                            
+                            {% if course %}
+                                {% if course.1 %}
+                                Disc:
+                                {% endif %}
+                                {{ course.0.name }}
+                            {% endif %}
+                            </td>
+                        {% endwith %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                {% if schedule.1 %}
+                <tr>
+                    <td colspan="5">
+                        <p>TO ARRANGE:
+                            {% for course in schedule.1 %}
+                                {{course.name}}
+                            {% endfor %}
+                        </p>
+                    </td>
+                </tr>
+                {%endif%}
+            {% endwith %}
+        </table>
+        {% empty %}
+        No saved schedule.  Go create one!
+        {% endfor %}
+    </div>
+
+</div>
 {%endblock%}
