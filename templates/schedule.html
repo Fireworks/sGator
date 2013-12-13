@@ -20,7 +20,7 @@
 	<br/>
 	Number of Courses To Be Generated in Schedule: <b>{{totalC}}</b>
 	<p>Number of Courses Wanted in Schedule:
-        <input TYPE="text" id="num-courses" type="number" name="numc" size="5"/>
+        <input TYPE="text" id="num-courses" type="number" name="numc" size="5" value="{{request.POST.numc}}"/>
         <br/><br/>
         <p>Days to schedule classes</p>
 		<input type="checkbox" name="days" value="M" checked/><label>Monday</label>
@@ -28,7 +28,7 @@
 		<input type="checkbox" name="days" value="W" checked/><label>Wednesday</label>
 		<input type="checkbox" name="days" value="R" checked/><label>Thursday</label>
 		<input type="checkbox" name="days" value="F" checked/><label>Friday</label>
-		<select name="no-before">
+		<select name="no_before">
 			<option value="1">No classes before</option>
 			<option value="2">Pd 2</option>
 			<option value="3">Pd 3</option>
@@ -44,7 +44,7 @@
 			<option value="13">Pd E2</option>
 			<option value="14">Pd E3</option>
 		</select>
-		<select name="no-after">
+		<select name="no_after">
 			<option value="14">No classes after</option>
 			<option value="1">Pd 1</option>
 			<option value="2">Pd 2</option>

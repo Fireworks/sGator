@@ -123,15 +123,15 @@ def generateSchedule(request):
                             break
                         for time in gettimes(cls.ltime):
                             print time
-                            if time < int(request.POST['no-before']):
+                            if time < int(request.POST['no_before']):
                                 good = False
-                            elif time > int(request.POST['no-after']):
+                            elif time > int(request.POST['no_after']):
                                 good = False
                         for time in gettimes(cls.dtime):
                             print time
-                            if time < int(request.POST['no-before']):
+                            if time < int(request.POST['no_before']):
                                 good = False
-                            elif time > int(request.POST['no-after']):
+                            elif time > int(request.POST['no_after']):
                                 good = False
                     if good:
                         actual.append(result)
