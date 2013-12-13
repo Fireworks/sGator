@@ -152,7 +152,6 @@ def generateSchedule(request):
                 request.user.get_profile().savedsch.append(templist[saveIndex - 1])
                 print 'SAVED SCHEDULE NUMBER ' + str(saveIndex)
                 print request.user.get_profile().savedsch
-
             return render_to_response('schedule.html', {"courses": courseO,"results": templist,"totalC":numFoundCourses,}, context_instance=context)
         
     else:
