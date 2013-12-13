@@ -29,7 +29,6 @@ def generateLinks(results):  #generate links for campus map view
                     tempstring = tempstring + val +','
                     
         templist = tempstring.split(',')
-        print templist
         x = len(templist) - 1
         y = 0
         while(x >=0):
@@ -39,7 +38,6 @@ def generateLinks(results):  #generate links for campus map view
             
         tempstring = tempstring + ';'
         
-    print ''.join(tempstrings)
     
     return '0'
 
@@ -121,11 +119,9 @@ def generateSchedule(request):
                              
             actual = []
             if request.POST and not clickSave:
-                print request.POST
                 for result in templist:
                     good = True;
                     for cls in result:
-                        print vars(cls)
                         if len(cls.lday.split()) > len([i for i in cls.lday.split() if i in dict(request.POST)['days']]):
                             good = False
                             break
@@ -133,13 +129,13 @@ def generateSchedule(request):
                             good = False
                             break
                         for time in gettimes(cls.ltime):
-                            print time
+                            #print time
                             if time < int(request.POST['no_before']):
                                 good = False
                             elif time > int(request.POST['no_after']):
                                 good = False
                         for time in gettimes(cls.dtime):
-                            print time
+                            #print time
                             if time < int(request.POST['no_before']):
                                 good = False
                             elif time > int(request.POST['no_after']):
@@ -148,10 +144,10 @@ def generateSchedule(request):
                         actual.append(result)
                 templist = actual
             if clickSave: 
-                print actual
+                #print actual
                 request.user.get_profile().savedsch.append(templist[saveIndex - 1])
-                print 'SAVED SCHEDULE NUMBER ' + str(saveIndex)
-                print request.user.get_profile().savedsch
+                #print 'SAVED SCHEDULE NUMBER ' + str(saveIndex)
+                #print request.user.get_profile().savedsch
             return render_to_response('schedule.html', {"courses": courseO,"results": templist,"totalC":numFoundCourses,}, context_instance=context)
         
     else:
@@ -162,7 +158,7 @@ def profile(request):
     context = RequestContext(request)
     user_profile = request.user.get_profile()#profile object passed to template - can also be manipulated
     if request.user.is_authenticated():
-        print request.user.get_profile().savedsch #saved schedules being passed
+        #print request.user.get_profile().savedsch #saved schedules being passed
         return render_to_response("profile.html",{"uprofile": user_profile,"Schedule":request.user.get_profile().savedsch, },context_instance=context)  # to be edited when more stuff is added to profile page
     else:
         return render_to_response('nsi.html', context_instance=context)
@@ -175,7 +171,7 @@ def search(request):
     iquery = request.GET.get('q')
     query = iquery.strip()
     criteria = request.GET.get('DEPT')
-    print query + str(len(query))
+    #print query + str(len(query))
     if criteria != "":
         resultsF = Course.objects.filter(dept__exact = criteria)
         
