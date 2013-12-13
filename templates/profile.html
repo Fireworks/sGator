@@ -50,7 +50,7 @@ $(document).ready(function(){
                 <th>Friday</th>
             </tr>
             {% with schedule=result|format_display %}
-                {% for period in Schedule.0 %}
+                {% for period in schedule.0 %}
                 <tr>
                     {% for day in 'MTWRF' %}
                         {% with course=period|get_item:day %}
