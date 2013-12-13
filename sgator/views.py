@@ -61,6 +61,16 @@ def generateSchedule(request):
             tcourses = list()
             templist = list()
             generated = False
+            clickSave = False
+            saveIndex = 0
+            action = None
+            for key in request.POST.keys():
+                if key.startswith('save:'):
+                    action = key[5:]
+                    #print 'SAVE' + str(action)
+                    saveIndex = int(action)
+                    clickSave = True
+                    break
             if request.POST.get('clear'):
                 del request.user.get_profile().cursc[0:len(request.user.get_profile().cursc)]  #CLEAR temporary list of schedules generated
                 del request.user.get_profile().courses[0:len(request.user.get_profile().courses)] #If generated, the temporary courses are removed from the table and the User object
@@ -107,9 +117,10 @@ def generateSchedule(request):
                     generated = false
                 else:
                     if len(request.user.get_profile().cursc) > 0:
-                        templist = request.user.get_profile().cursc[0]                   
+                        templist = request.user.get_profile().cursc[0]  
+                             
             actual = []
-            if request.POST:
+            if request.POST and not clickSave:
                 print request.POST
                 for result in templist:
                     good = True;
@@ -135,7 +146,14 @@ def generateSchedule(request):
                                 good = False
                     if good:
                         actual.append(result)
-            return render_to_response('schedule.html', {"courses": courseO,"results": actual,"totalC":numFoundCourses,}, context_instance=context)
+                templist = actual
+            if clickSave: 
+                print actual
+                request.user.get_profile().savedsch.append(templist[saveIndex - 1])
+                print 'SAVED SCHEDULE NUMBER ' + str(saveIndex)
+                print request.user.get_profile().savedsch
+
+            return render_to_response('schedule.html', {"courses": courseO,"results": templist,"totalC":numFoundCourses,}, context_instance=context)
         
     else:
         return render_to_response('nsi.html', context_instance=context)
@@ -145,7 +163,8 @@ def profile(request):
     context = RequestContext(request)
     user_profile = request.user.get_profile()#profile object passed to template - can also be manipulated
     if request.user.is_authenticated():
-        return render_to_response("profile.html",{"uprofile": user_profile,},context_instance=context)  # to be edited when more stuff is added to profile page
+        print request.user.get_profile().savedsch #saved schedules being passed
+        return render_to_response("profile.html",{"uprofile": user_profile,"Schedule":request.user.get_profile().savedsch, },context_instance=context)  # to be edited when more stuff is added to profile page
     else:
         return render_to_response('nsi.html', context_instance=context)
 

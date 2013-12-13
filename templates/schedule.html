@@ -106,6 +106,9 @@
 				{%endif%}
 			{% endwith %}
 		</table>
+		<FORM METHOD="POST" ACTION="/schedule/">
+			<INPUT TYPE="submit" class="btn btn-warning" name="save:{{forloop.counter}}" value = 'Save Schedule #{{forloop.counter}}'></p>
+		</FORM>
 		{%empty%}
 		No results. Try selecting fewer courses.
 		{% endfor %}
