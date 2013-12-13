@@ -27,6 +27,15 @@ class Course(models.Model):
     d2room = models.CharField(max_length=200)
     finalgrade = models.CharField(max_length=200) 
     
+    def __unicode__(self):
+        times = ""
+        if not self.lday == "":
+            times += "{} {}".format(self.lday, self.ltime)
+        if not self.dday == "":
+            times += ", {} {}".format(self.dday, self.dtime)
+        if not self.d2day == "":
+            times += ", {} {}".format(self.d2day, self.d2time)
+        return "{} section {}, {}".format(self.name, self.section, times)
     
     def __iter__(self):
         for i in self._meta.get_all_field_names():
