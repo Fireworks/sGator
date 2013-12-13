@@ -33,7 +33,7 @@
                     <th class="col-hidden">Disc. Day (2)</th>
                     <th class="col-hidden">Disc. Period (2)</th>
                     <th class="col-hidden">Disc. Location (2)</th>
-                    <th class="col-hide">RateMyProf</th 
+                    <th class="col-hide">RateMyProf</th>
                 </tr>
                 {% for result in results %}
                   	<tr>
@@ -51,6 +51,7 @@
 						<td class="col-hide">{{ result.dday}}</td>
 						<td class="col-hide">{{ result.dtime }}</td>
 						<td class="col-hide">{{ result.dbuild}} {{result.droom}}</td>
+                        <td class="col-hide">{{result.rmpr}}</td>
                         {%if result.d2day %}
                         <td class="col-hidden">{{ result.d2day }}</td>           
                         <td class="col-hidden">{{ result.d2time }}</td>
@@ -63,7 +64,6 @@
                         <td></td>
                         <td></td>
                         {%endif %}
-                        <td>{{result.rmpr}}</td>
 					</tr>
               {% endfor %}
             </table>
