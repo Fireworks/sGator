@@ -47,6 +47,7 @@ class UserProfile(FacebookModel):
     pastHistory = Schedule()#Schedule Model 
     cursc = list()
     courses = list()
+    savedsch = list()
     user = models.ForeignKey(User, unique=True)
    
 

@@ -13,6 +13,10 @@ form{
         margin: 0;
 }
 
+.main {
+    padding-bottom: 40px;
+}
+
 .no-margin{
         margin: 0px !important;
 }
