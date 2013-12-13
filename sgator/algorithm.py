@@ -1,7 +1,7 @@
 from course.models import Course as DB_Course
 from sgator.models import Schedule
 from course.models import Course
-from operator import attrgetter
+from operator import itemgetter
 import itertools
 
 def gettimes(ltime):
@@ -32,7 +32,31 @@ def generate_schedules(Results,numc):
             list2.append(findID(v))  
         if  not checkDup(list2): #remove duplicate names from iterations generated-> not possible to have more than one of same class
             list3.append(list2)
-    return checkConflict(list3) #contains list of all combinations (lists) of courses without duplicate names
+    # RMP sorting
+    list4 = checkConflict(list3) #check for conflicts
+    list6 = list()
+    for s in list4:
+        totalrmp = 0.0
+        totalcred = 0.0
+        for c in s:
+            try:
+                totalrmp = totalrmp + float(c.rmpr)
+                totalcred = totalcred + float(c.cedits)
+					 # assuming rmpr exists, add it to the average
+            except:
+                totalrmp = totalrmp
+                totalcred = totalcred
+        try:
+            list6.append([s, totalrmp/totalcred])
+				# average all of the scores for better sorting
+        except:
+            list6.append([s, 0.0])
+    list6.sort(key=itemgetter(1), reverse=True)
+    list5 = list()
+    for x in list6:
+        list5.append(x[0])
+    return list5
+    #return checkConflict(list3) #contains list of all combinations (lists) of courses without duplicate names
     
 def findID(i): #will query database to find and return given courses, in this case source is just a list passed from the beginning
     return Course.objects.get(id__iexact = i)
@@ -204,10 +228,11 @@ def checkDup(listt):
         
     return conflict
 
+# MOVED TO ALGORITHM
 #Rate my Professor stuff
-def sortByRMP(Results):
-    #Uses built-in Python sort based on average Rate My Prof. scores
-    Results.sort(key=attrgetter('averageRMP'), reverse=True)
+#def sortByRMP(Results):
+#    #Uses built-in Python sort based on average Rate My Prof. scores
+#    Results.sort(key=attrgetter('averageRMP'), reverse=True)
 
 def minRMP(Results,min):
     #removes schedules that have a class with a RMP score less than the specified value
