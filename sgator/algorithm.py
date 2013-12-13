@@ -42,7 +42,7 @@ def checkConflict(list1):
     temp = list()
     btemp = checkLect(list1)
     btemp = checkDisc(btemp)
-    print "CONSOLIDATED LIST " + str(btemp)
+    #print "CONSOLIDATED LIST " + str(btemp)
    #CHECK SEPARATELY FIRST  for Lecture and DIscussion conflicts -> Now we have all possible combinations based on ONLY Lecture vs Lecture and Disc vs Disc conflicts    
     for i,lst in enumerate(btemp):
         size = len(lst) - 1
