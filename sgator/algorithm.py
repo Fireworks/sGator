@@ -129,6 +129,8 @@ def getdays(d):
     return temp2
 
 def checkTime(c1,c2,t):# Check for Lecture/Discussion TIME conflicts
+    c1Lc2DT = False
+    c1Dc2LT = False
     if t == 'L': #check LECTURE vs LECTURE Conflicts ONLY
         c1time = gettimes(c1.ltime)
         c2time = gettimes(c2.ltime)
@@ -136,26 +138,40 @@ def checkTime(c1,c2,t):# Check for Lecture/Discussion TIME conflicts
             for t in c2time:
                 if c == t:
                     return True
-                
+        
+        
     elif t == 'D': #check DISCUSSION vs DISCUSSION Conflicts ONLY
         c1time = gettimes(c1.dtime)
         c2time = gettimes(c2.dtime)
+        c1dtime2 = gettimes(c1.d2time)
+        c2dtime2 = gettimes(c2.d2time)
         for c in c1time:
             for t in c2time:
                 #print "Course 1 Time" + c + "Course 2 Time" + t+ "  "
                 if c == t:
                     #print "CONFLICT"
                     return True
+        for c in c1time:
+            for t in c2dtime2:
+                #print "Course 1 Time" + c + "Course 2 Time" + t+ "  "
+                if c == t:
+                    #print "CONFLICT"
+                    return True
+        for c in c1dtime2:
+            for t in c2dtime2:
+                #print "Course 1 Time" + c + "Course 2 Time" + t+ "  "
+                if c == t:
+                    #print "CONFLICT"
+                    return True
+            
 
     elif t == 'B':#Check for BOTH LECTURE AND DISCUSSION MIXED CONFLICTS
         c1ltime = gettimes(c1.ltime)
         c2dtime = gettimes(c2.dtime)
         c1dtime = gettimes(c1.dtime)
         c2ltime = gettimes(c2.ltime)
-        c1dtime2 = gettimes(c1.dtime)
-        c2dtime2 = gettimes(c2.dtime)
-        c1Lc2DT = False
-        c1Dc2LT = False
+        c1dtime2 = gettimes(c1.d2time)
+        c2dtime2 = gettimes(c2.d2time)
         
         for c in c1ltime:   #C1 LECTURES VS C2 DISCUSSIONS TIMES
             for t in c2dtime:
@@ -164,7 +180,10 @@ def checkTime(c1,c2,t):# Check for Lecture/Discussion TIME conflicts
                     #print "CONFLICT "+ str(c1)+" LECTURES VS "+str(c2)+" DISCUSSIONS TIMES"
                     c1Lc2DT = True
                     
-
+            for t in c2dtime2:
+                if c == t:
+                    c1Lc2DT = True
+                    
         for c in c2ltime:   #C2 LECTURES VS C1 DISCUSSIONS TIMES
             for t in c1dtime:
                 #print "Course 1 Time" + c + "Course 2 Time" + t+ "  "
@@ -172,11 +191,19 @@ def checkTime(c1,c2,t):# Check for Lecture/Discussion TIME conflicts
                     #print "CONFLICT "+ str(c2)+" LECTURES VS "+str(c1)+" DISCUSSIONS TIMES"
                     c1Dc2LT = True
                     
+            for t in c1dtime2:
+                if c == t:
+                    c1Dc2LT = True
+
+                    
+            
         return (c1Lc2DT, c1Dc2LT)
     
     return False
 
 def checkDay(c1,c2,t):# Check for Lecture/Discussion DAY conflicts
+    c1Lc2DD = False
+    c1Dc2LD = False
     if t == 'L':            #check LECTURE vs LECTURE Conflicts ONLY
         c1day = getdays(c1.lday)
         c2day = getdays(c2.lday)
@@ -189,8 +216,22 @@ def checkDay(c1,c2,t):# Check for Lecture/Discussion DAY conflicts
     elif t == 'D':               #check DISCUSSION vs DISCUSSION Conflicts ONLY
         c1day = getdays(c1.dday)
         c2day = getdays(c2.dday)
+        c2day2  = getdays(c2.d2day)
+        c1day2  = getdays(c1.d2day)
         for c in c1day:
             for t in c2day:
+                #print "Course 1 Day" + c + "Course 2 Day" + t+ "  "
+                if c == t:
+                    #print "CONFLICT"
+                    return True
+       
+            for t in c2day2:
+                #print "Course 1 Day" + c + "Course 2 Day" + t+ "  "
+                if c == t:
+                    #print "CONFLICT"
+                    return True
+        for c in c1day2:
+            for t in c2day2:
                 #print "Course 1 Day" + c + "Course 2 Day" + t+ "  "
                 if c == t:
                     #print "CONFLICT"
@@ -202,14 +243,18 @@ def checkDay(c1,c2,t):# Check for Lecture/Discussion DAY conflicts
         c2dday  = getdays(c2.dday)
         c1dday  = getdays(c1.dday)
         c2lday  = getdays(c2.lday)
-        c1Lc2DD = False
-        c1Dc2LD = False
+        c2dday2  = getdays(c2.d2day)
+        c1dday2  = getdays(c1.d2day)
         
         for c in c1lday :   #C1 LECTURES VS C2 DISCUSSIONS DAYS
             for t in c2dday :
                 #print "Course 1 Time" + c + "Course 2 Time" + t+ "  "
                 if c == t:
                     #print "CONFLICT "+ str(c1)+" LECTURES VS "+str(c2)+" DISCUSSIONS DAYS"
+                    c1Lc2DD = True
+
+            for t in c2dday2 :
+                if c == t:
                     c1Lc2DD = True
                     
 
@@ -219,10 +264,13 @@ def checkDay(c1,c2,t):# Check for Lecture/Discussion DAY conflicts
                 if c == t:
                     #print "CONFLICT "+ str(c2)+" LECTURES VS "+str(c1)+" DISCUSSIONS DAYS"
                     c1Dc2LD = True
-                    
-                
 
-        
+
+            for t in c1dday2 :
+                #print "Course 1 Time" + c + "Course 2 Time" + t+ "  "
+                if c == t:
+                    #print "CONFLICT "+ str(c2)+" LECTURES VS "+str(c1)+" DISCUSSIONS DAYS"
+                    c1Dc2LD = True
 
         return (c1Lc2DD, c1Dc2LD)
     
